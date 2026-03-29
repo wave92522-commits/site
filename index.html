@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +10,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
         body { font-family: 'Inter', system-ui, sans-serif; }
         .neon-cyan { text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00bfff; }
-        .sidebar-active { background: linear-gradient(90deg, #00bfff, #00f0ff); color: #000; }
+        .sidebar-active { background: linear-gradient(90deg, #00bfff, #00f0ff); color: #000; font-weight: 600; }
         @keyframes neonPulse { 0% { text-shadow: 0 0 10px #00f0ff; } 50% { text-shadow: 0 0 30px #8a2be2; } 100% { text-shadow: 0 0 10px #00f0ff; } }
         .neon-text { animation: neonPulse 2s infinite; }
     </style>
 </head>
 <body class="bg-[#0a0a0a] text-white flex min-h-screen">
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR (exactly like serverside.fun) -->
     <div class="w-64 bg-[#111] border-r border-[#222] flex flex-col">
         <div class="p-6 border-b border-[#222]">
             <div class="flex items-center gap-3">
@@ -26,7 +26,7 @@
         </div>
         
         <nav class="flex-1 p-3">
-            <a href="#" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-xl mb-1 text-black font-medium">
+            <a href="#" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-xl mb-1 text-black">
                 <i class="fa-solid fa-house"></i>
                 <span>Dashboard</span>
             </a>
@@ -43,9 +43,9 @@
                 <span>Visuals</span>
             </a>
             
-            <!-- ADMIN PANEL только для тебя -->
+            <!-- ADMIN PANEL ONLY FOR YOU -->
             <div id="admin-menu" class="hidden mt-8">
-                <div class="text-[#8a2be2] text-xs font-bold px-4 mb-2">ADMIN</div>
+                <div class="text-[#8a2be2] text-xs font-bold px-4 mb-2">ADMIN ONLY</div>
                 <a href="#" onclick="lockSite()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a]">
                     <i class="fa-solid fa-shield-halved"></i>
                     <span>Admin Panel</span>
@@ -66,78 +66,75 @@
 
     <!-- MAIN CONTENT -->
     <div class="flex-1 p-8">
-        <!-- Top Header -->
         <div class="flex justify-between items-center mb-10">
             <div>
                 <h2 class="text-4xl font-semibold neon-text">Dashboard</h2>
-                <p class="text-[#aaa]">Добро пожаловать обратно, wave92522-commits</p>
+                <p class="text-[#aaa]">Welcome back, wave92522-commits</p>
             </div>
             <div class="flex items-center gap-4">
                 <div class="bg-[#1a1a1a] px-5 py-2 rounded-3xl flex items-center gap-2">
                     <i class="fa-solid fa-clock text-[#00f0ff]"></i>
-                    <span id="time-left" class="font-medium">4ч 47м осталось</span>
+                    <span id="time-left" class="font-medium">4h 47m left</span>
                 </div>
-22:30
+22:34
 <button onclick="logout()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-6 py-2 rounded-3xl transition flex items-center gap-2">
                     <i class="fa-solid fa-right-from-bracket"></i>
-                    Выйти
+                    Logout
                 </button>
             </div>
         </div>
 
-        <!-- KEY SECTION -->
+        <!-- GET KEY SECTION -->
         <div class="bg-[#111] border border-[#222] rounded-3xl p-8 mb-8">
             <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
                 <i class="fa-solid fa-key text-[#00f0ff]"></i>
-                Получить ключ
+                Get Key
             </h3>
             
             <div class="flex flex-wrap gap-4">
                 <button onclick="getFreeKey()" 
                         class="flex-1 min-w-[240px] bg-gradient-to-r from-[#00bfff] to-[#00f0ff] text-black font-bold py-6 rounded-3xl text-xl hover:scale-105 transition shadow-[0_0_25px_#00f0ff]">
-                    БЕСПЛАТНЫЙ КЛЮЧ (5 часов)
+                    FREE KEY (5 hours)
                 </button>
                 <button onclick="getPremiumKey()" 
                         class="flex-1 min-w-[240px] bg-gradient-to-r from-[#8a2be2] to-[#00bfff] text-black font-bold py-6 rounded-3xl text-xl hover:scale-105 transition shadow-[0_0_25px_#8a2be2]">
-                    ПРЕМИУМ КЛЮЧ (15 часов)
+                    PREMIUM KEY (15 hours)
                 </button>
             </div>
 
-            <!-- Ключ отображается здесь -->
+            <!-- KEY DISPLAY (now working) -->
             <div id="key-display" class="mt-8 hidden bg-[#0a0a0a] border-2 border-[#00f0ff] rounded-2xl p-6 text-center">
-                <p class="text-[#00f0ff] text-sm mb-2">✅ КЛЮЧ УСПЕШНО СГЕНЕРИРОВАН</p>
+                <p class="text-[#00f0ff] text-sm mb-2">✅ KEY GENERATED SUCCESSFULLY</p>
                 <div id="key-text" class="text-3xl font-bold tracking-widest text-white mb-4 break-all"></div>
                 <button onclick="copyCurrentKey()" 
                         class="bg-[#00f0ff] text-black px-8 py-3 rounded-2xl font-medium flex items-center gap-2 mx-auto">
                     <i class="fa-solid fa-copy"></i>
-                    СКОПИРОВАТЬ КЛЮЧ
+                    COPY KEY
                 </button>
             </div>
         </div>
 
         <!-- ACCOUNT & SCRIPTS -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Account Card -->
             <div class="bg-[#111] border border-[#222] rounded-3xl p-8">
-                <h3 class="text-xl font-semibold mb-6">📊  Твой аккаунт</h3>
+                <h3 class="text-xl font-semibold mb-6">📊  Your Account</h3>
                 <div class="space-y-4">
-                    <div class="flex justify-between"><span class="text-[#aaa]">Имя</span><span class="font-medium">wave92522-commits</span></div>
-                    <div class="flex justify-between"><span class="text-[#aaa]">Статус</span><span class="text-[#00f0ff] font-bold">АКТИВЕН • Premium</span></div>
-                    <div class="flex justify-between"><span class="text-[#aaa]">Ключ истекает</span><span id="expire-time" class="font-medium">29 марта 2026, 23:59</span></div>
+                    <div class="flex justify-between"><span class="text-[#aaa]">Username</span><span class="font-medium">wave92522-commits</span></div>
+                    <div class="flex justify-between"><span class="text-[#aaa]">Status</span><span class="text-[#00f0ff] font-bold">ACTIVE • Premium</span></div>
+                    <div class="flex justify-between"><span class="text-[#aaa]">Key expires</span><span id="expire-time" class="font-medium">March 29, 2026, 23:59</span></div>
                 </div>
             </div>
 
-            <!-- Scripts Card -->
             <div class="bg-[#111] border border-[#222] rounded-3xl p-8">
                 <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-code text-[#00bfff]"></i>
-                    Популярные скрипты
+                    Popular Scripts
                 </h3>
                 <button onclick="copyScript('Infinite Yield')" 
                         class="w-full bg-[#1a1a1a] hover:bg-[#222] border border-[#333] p-5 rounded-2xl text-left flex justify-between items-center transition">
                     <div>
                         <div class="font-medium">Infinite Yield</div>
-                        <div class="text-[#aaa] text-sm">Самый популярный executor</div>
+                        <div class="text-[#aaa] text-sm">Most popular executor script</div>
                     </div>
                     <i class="fa-solid fa-copy text-[#00f0ff]"></i>
                 </button>
@@ -152,21 +149,20 @@
             currentKey = key;
             const display = document.getElementById("key-display");
             const textEl = document.getElementById("key-text");
-22:30
-textEl.textContent = key;
+            textEl.textContent = key;
             display.classList.remove("hidden");
-            display.style.animation = "neonPulse 1.5s infinite";
-            navigator.clipboard.writeText(key);
+22:34
+navigator.clipboard.writeText(key);
         }
 
         function getFreeKey() {
             const key = "FREE-" + Math.random().toString(36).substring(2, 14).toUpperCase();
-            showKey(key, "БЕСПЛАТНЫЙ");
+            showKey(key, "FREE");
         }
 
         function getPremiumKey() {
             const key = "PREM-" + Math.random().toString(36).substring(2, 14).toUpperCase();
-            showKey(key, "ПРЕМИУМ");
+            showKey(key, "PREMIUM");
         }
 
         function copyCurrentKey() {
@@ -174,22 +170,22 @@ textEl.textContent = key;
         }
 
         function copyScript(name) {
-            const text = `-- ${name} успешно загружен`;
+            const text = `-- ${name} successfully loaded`;
             navigator.clipboard.writeText(text);
-            alert("✅ " + name + " скопирован в буфер обмена!");
+            alert("✅ " + name + " copied to clipboard!");
         }
 
         function lockSite() {
-            if (confirm("Закрыть сайт для всех пользователей?")) {
-                alert("✅ Сайт закрыт (видно только тебе).");
+            if (confirm("Close the site for ALL users?")) {
+                alert("✅ Site is now closed for everyone (visible only to you).");
             }
         }
 
         function logout() {
-            if (confirm("Выйти из аккаунта?")) location.reload();
+            if (confirm("Logout?")) location.reload();
         }
 
-        // Показываем Admin только тебе
+        // Show Admin Panel ONLY for you
         window.onload = () => {
             if (window.location.hostname.includes("wave92522-commits")) {
                 document.getElementById("admin-menu").classList.remove("hidden");

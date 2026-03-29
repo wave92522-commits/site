@@ -2,70 +2,125 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAVE HUB | DASHBOARD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wave Server Side Scripts | Official</title>
+    
     <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
+    
+    <div class="neon-bg-container">
+        <div class="neon-blob blob-1"></div>
+        <div class="neon-blob blob-2"></div>
+        <div class="neon-blob blob-3"></div>
+        <div class="neon-blob blob-4"></div>
+        <div class="neon-blob blob-5"></div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        
+        <aside class="sidebar desktop-only">
             <div class="sidebar-header">
-                <div class="logo-circle">W</div>
-                <span>WAVE HUB</span>
+                <div class="wave-logo">
+                    <i class="fas fa-water"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="main-title">Wave</span>
+                    <span class="sub-title">SS Scripts</span>
+                </div>
             </div>
+            
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="#" class="nav-item"><i class="fas fa-code"></i> Scripts</a>
-                <a href="#" class="nav-item"><i class="fas fa-book"></i> Docs</a>
-                <a href="#" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="nav-item active"><i class="fas fa-house"></i> Home</a>
+                <a href="#" class="nav-item"><i class="fas fa-scroll"></i> My Scripts</a>
+                <a href="#" class="nav-item"><i class="fas fa-book-open"></i> Docs</a>
+                <a href="#" class="nav-item"><i class="fas fa-life-ring"></i> Support</a>
             </nav>
+
             <div class="sidebar-footer">
-                <button id="discord-btn-side" class="discord-mini-btn">
-                    <i class="fab fa-discord"></i> Join Discord
+                <button id="discord-btn-side" class="discord-btn">
+                    <i class="fab fa-discord"></i> Community
                 </button>
             </div>
         </aside>
 
         <main class="main-content">
-            <header class="top-bar">
-                <div class="user-info">
-                    <span class="status-badge">Online</span>
-                    <span class="version">v2.9.0</span>
+            
+            <header class="mobile-header mobile-only">
+                <div class="wave-logo-mini">
+                    <i class="fas fa-water"></i>
+                </div>
+                <span class="brand-text-mini">Wave SS</span>
+                <div class="user-avatar-mini">
+                    <i class="fas fa-user-circle"></i>
                 </div>
             </header>
 
-            <section class="content-area">
-                <div class="welcome-card">
-                    <h1>Welcome back, User</h1>
-                    <p>Manage your scripts and executor settings from here.</p>
+            <div class="content-inner">
+                
+                <div class="welcome-section">
+                    <h1>Welcome to <span class="neon-text">Wave</span></h1>
+                    <p>The next generation of Server Side execution. Powerful, fast, undetected.</p>
                 </div>
 
-                <div class="grid-container">
-                    <div class="card">
-                        <div class="card-icon"><i class="fas fa-terminal"></i></div>
-                        <h3>Main Executor Script</h3>
-                        <p>Latest version of WAVE HUB script for universal games.</p>
-                        <button id="copy-btn" class="action-btn primary">Copy Loadstring</button>
+                <div class="script-box card">
+                    <div class="card-header">
+                        <i class="fas fa-terminal"></i>
+                        <span>Main Executor Loadstring</span>
                     </div>
-
-                    <div class="card">
-                        <div class="card-icon"><i class="fab fa-discord"></i></div>
-                        <h3>Community</h3>
-                        <p>Join our server for updates and support from developers.</p>
-                        <button id="discord-btn" class="action-btn secondary">Open Discord</button>
+                    <div class="script-code-wrapper">
+                        <code>loadstring(game:HttpGet("https://raw.github.../loader.lua"))()</code>
                     </div>
+                    <button id="copy-btn" class="action-btn-neon">
+                        <i class="fas fa-copy"></i> Copy Script
+                    </button>
+                </div>
 
-                    <div class="card">
-                        <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3>Status</h3>
-                        <p>Delta Executor: <span class="text-success">Undetected</span></p>
-                        <button class="action-btn outline" disabled>Check Status</button>
+                <div class="grid-cards">
+                    <div class="card card-sm">
+                        <i class="fas fa-network-wired card-icon"></i>
+                        <h3>Global Access</h3>
+                        <p>Access your scripts from any game.</p>
+                    </div>
+                    <div class="card card-sm">
+                        <i class="fas fa-bolt card-icon"></i>
+                        <h3>Fast Load</h3>
+                        <p>Under 1s execution time optimized.</p>
                     </div>
                 </div>
-            </section>
+
+            </div>
+23:39
+<div class="mobile-spacer mobile-only"></div>
         </main>
     </div>
+
+    <nav class="mobile-nav mobile-only">
+        <a href="#" class="mob-nav-item active">
+            <i class="fas fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="mob-nav-item">
+            <i class="fas fa-scroll"></i>
+            <span>Scripts</span>
+        </a>
+        <a href="#" id="copy-btn-mob" class="mob-nav-item center-item">
+            <i class="fas fa-copy"></i>
+        </a>
+        <a href="#" class="mob-nav-item">
+            <i class="fas fa-book-open"></i>
+            <span>Docs</span>
+        </a>
+        <a href="#" id="discord-btn-mob" class="mob-nav-item">
+            <i class="fab fa-discord"></i>
+            <span>Discord</span>
+        </a>
+    </nav>
 
     <script src="script.js"></script>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wave SERVER SUDE SCRIPTS</title>
+    <title>Wave SERVER SIDE SCRIPTS</title>
     <style>
         body {
             background: #111;
@@ -18,32 +18,36 @@
             margin: 0 auto;
         }
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
         }
-        h2 {
-            color: #00cc66;
-            border-bottom: 2px solid #333;
-            padding-bottom: 8px;
-        }
-        .key-section, .script-section {
+        .key-box {
             background: #1a1a1a;
+            border: 2px solid #00cc66;
+            border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
-            border-radius: 8px;
-            border: 1px solid #333;
+            text-align: center;
+            min-height: 80px;
+        }
+        .key-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            word-break: break-all;
+            margin: 10px 0;
         }
         button {
             background: #00cc66;
             color: #000;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 24px;
             font-size: 1.1rem;
             cursor: pointer;
-            border-radius: 4px;
-            margin: 5px;
+            border-radius: 5px;
+            margin: 6px;
         }
         button:hover {
             background: #00ff88;
@@ -51,97 +55,104 @@
         .admin {
             background: #330000;
             border: 2px solid #ff3333;
-            padding: 15px;
-            margin-top: 30px;
-            display: none;
-        }
-        pre {
-            background: #222;
-            padding: 15px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .status {
-            color: #00ff88;
-            font-weight: bold;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Wave SERVER SUDE SCRIPTS</h1>
-        <p style="text-align:center; color:#aaa;">Добро пожаловать, wave92522-commits!</p>
+        <h1>Wave SERVER SIDE SCRIPTS</h1>
+        <p style="text-align:center; color:#aaa; margin-bottom:30px;">Добро пожаловать, wave92522-commits!</p>
 
-        <div class="key-section">
-            <h2>🔑  Получить ключ</h2>
+        <div class="key-box" id="key-display">
+            <p style="color:#666;">Нажми кнопку, чтобы получить ключ</p>
+        </div>
+
+        <div style="text-align:center; margin:25px 0;">
             <button onclick="getFreeKey()">БЕСПЛАТНЫЙ КЛЮЧ (5 часов)</button>
             <button onclick="getPremiumKey()">ПРЕМИУМ КЛЮЧ (15 часов)</button>
-            <p id="key-result" style="margin-top:15px; font-size:1.1rem;"></p>
         </div>
 
-        <div class="key-section">
-            <h2>📊  Твой аккаунт</h2>
+        <div style="background:#1a1a1a; padding:20px; border-radius:8px; margin:25px 0;">
+            <h2 style="color:#00cc66;">📊  Твой аккаунт</h2>
             <p>Имя: <strong>wave92522-commits</strong></p>
-            <p>Статус ключа: <span class="status">АКТИВЕН</span></p>
-            <p>Осталось: <span id="time-left">4ч 47м</span></p>
+            <p>Статус ключа: <span style="color:#00ff88; font-weight:bold;">АКТИВЕН</span></p>
+            <p>Осталось времени: <span id="time-left">4ч 32м</span></p>
         </div>
 
-        <div class="script-section">
-            <h2>📜  Скрипты</h2>
+        <div style="background:#1a1a1a; padding:20px; border-radius:8px;">
+            <h2 style="color:#00cc66;">📜  Скрипты</h2>
             <button onclick="copyScript('Infinite Yield')">Скопировать Infinite Yield</button>
-            <pre id="script-output" style="display:none; margin-top:10px;">-- Infinite Yield загружен успешно</pre>
         </div>
 
         <!-- ADMIN PANEL (только для тебя) -->
-        <div id="admin-panel" class="admin">
-            <h2>🔧  ADMIN PANEL (только wave92522-commits)</h2>
+        <div id="admin-panel" class="admin" style="display:none;">
+            <h2 style="color:#ff6666;">🔧  ADMIN PANEL</h2>
             <button onclick="copyPremiumKey()">Копировать PREMIUM ключ</button>
             <button onclick="copyFreeKey()">Копировать FREE ключ</button>
-            <button onclick="lockSite()" style="background:#ff3333; color:white;">Закрыть сайт для всех</button>
+            <button onclick="lockSite()" style="background:#ff3333;color:white;">Закрыть сайт для всех</button>
         </div>
     </div>
 
     <script>
+        let currentKey = "";
+
+        function showKey(key, type) {
+            currentKey = key;
+            const display = document.getElementById("key-display");
+            display.innerHTML = `
+                <p style="color:#00ff88; margin-bottom:8px;">✅ ${type} КЛЮЧ ПОЛУЧЕН!</p>
+                <div class="key-text">${key}</div>
+                <button onclick="copyCurrentKey()" style="background:#00aa55; padding:10px 20px; font-size:1rem;">📋 Скопировать ключ</button>
+            `;
+            copyCurrentKey(); // автоматически копирует
+        }
+
+        function copyCurrentKey() {
+            if (currentKey) {
+                navigator.clipboard.writeText(currentKey).then(() => {
+22:22
+// можно убрать комментарий если хочешь алерт
+                });
+            }
+        }
+
         function getFreeKey() {
-            const key = "FREE-" + Math.random().toString(36).substring(2, 12).toUpperCase();
-            document.getElementById("key-result").innerHTML = `✅ Получен бесплатный ключ:<br><strong>${key}</strong><br>(скопировано в буфер)`;
-            navigator.clipboard.writeText(key);
+            const key = "FREE-" + Math.random().toString(36).substring(2, 14).toUpperCase();
+            showKey(key, "БЕСПЛАТНЫЙ");
         }
 
         function getPremiumKey() {
-            const key = "PREM-" + Math.random().toString(36).substring(2, 12).toUpperCase();
-            document.getElementById("key-result").innerHTML = `✅ Получен премиум ключ:<br><strong>${key}</strong><br>(скопировано в буфер)`;
-            navigator.clipboard.writeText(key);
+            const key = "PREM-" + Math.random().toString(36).substring(2, 14).toUpperCase();
+            showKey(key, "ПРЕМИУМ");
         }
 
         function copyScript(name) {
-22:18
-const output = document.getElementById("script-output");
-            output.style.display = "block";
-            output.textContent = "-- " + name + " загружен успешно";
-            navigator.clipboard.writeText(output.textContent);
+            const text = `-- ${name} успешно загружен`;
+            navigator.clipboard.writeText(text);
             alert("✅ " + name + " скопирован!");
         }
 
         function copyPremiumKey() {
-            navigator.clipboard.writeText("PREMIUM-KEY-WAVE-SUDE-2026");
+            navigator.clipboard.writeText("PREMIUM-KEY-WAVE-SIDE-2026");
             alert("✅ PREMIUM ключ скопирован!");
         }
 
         function copyFreeKey() {
-            navigator.clipboard.writeText("FREE-KEY-WAVE-SUDE-2026");
+            navigator.clipboard.writeText("FREE-KEY-WAVE-SIDE-2026");
             alert("✅ FREE ключ скопирован!");
         }
 
         function lockSite() {
-            if (confirm("Закрыть сайт для всех пользователей?")) {
-                alert("✅ Сайт закрыт (видно только тебе).");
+            if (confirm("Закрыть сайт для всех?")) {
+                alert("Сайт закрыт для всех пользователей.");
             }
         }
 
         // Показываем Admin Panel только тебе
-        window.onload = function() {
+        window.onload = () => {
             if (window.location.hostname.includes("wave92522-commits")) {
                 document.getElementById("admin-panel").style.display = "block";
             }

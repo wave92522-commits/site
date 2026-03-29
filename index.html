@@ -3,154 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Scripts • Dashboard</title>
+    <title>Dashboard • Serverside</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        :root {
+            --turquoise: #00f5ff;
+            --vasilkovy: #6495ed;
+        }
+        * { transition: all 0.3s ease; }
         body {
-            background: #0a0a0a;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a1f, #0f0f2b);
+            color: #e0f0ff;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+        /* НЕОНОВЫЕ ЭФФЕКТЫ */
+        .neon-text {
+            text-shadow: 0 0 10px var(--turquoise),
+                        0 0 20px var(--turquoise),
+                        0 0 40px var(--vasilkovy);
+        }
+        .neon-card {
+            background: rgba(15, 20, 45, 0.95);
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--turquoise), var(--vasilkovy)) 1;
+            box-shadow: 0 0 15px var(--turquoise),
+                        0 0 30px var(--vasilkovy),
+                        inset 0 0 15px rgba(100, 149, 237, 0.3);
         }
         .sidebar {
-            background: #111111;
-            border-right: 1px solid #222;
+            background: #0b0b1f;
+            border-right: 3px solid var(--turquoise);
             height: 100vh;
             position: fixed;
-            width: 260px;
-            padding-top: 20px;
-        }
-        .main-content {
-            margin-left: 260px;
-            padding: 30px;
-        }
-        .header {
-            background: #1a1a1a;
-            border-bottom: 1px solid #222;
-            padding: 15px 30px;
-        }
-        .nav-link {
-            color: #aaa;
-            padding: 12px 25px;
-            display: block;
-        }
-        .nav-link:hover, .nav-link.active {
-            background: #1f1f1f;
-            color: #00ffaa;
-        }
-        .card {
-            background: #161616;
-            border: 1px solid #222;
-            border-radius: 12px;
-            transition: all 0.3s;
-        }
-        .card:hover {
-            border-color: #00ffaa;
-            transform: translateY(-4px);
-        }
-        .btn-copy {
-            background: #00cc77;
-            color: black;
-            font-weight: 600;
-            border: none;
-        }
-        .btn-copy:hover {
-            background: #00ff99;
-        }
-        .badge {
-            background: #ff3366;
-            font-size: 0.85rem;
+            width: 270px;
+            box-shadow: 0 0 30px var(--turquoise);
         }
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #00ffaa;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--turquoise), var(--vasilkovy));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--turquoise);
         }
+        .nav-link {
+            color: #a0d0ff;
+            padding: 16px 25px;
+            font-weight: 600;
+            border-left: 4px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(100, 149, 237, 0.15);
+            color: #fff;
+            border-left-color: var(--turquoise);
+            box-shadow: inset 0 0 20px var(--vasilkovy);
+        }
+        .header {
+            background: rgba(10, 15, 35, 0.95);
+            border-bottom: 3px solid var(--vasilkovy);
+            box-shadow: 0 0 20px var(--vasilkovy);
+        }
+        .main-content { margin-left: 270px; padding: 30px; }
+        .card { border-radius: 16px; }
+        .btn-neon {
+            background: linear-gradient(90deg, var(--turquoise), var(--vasilkovy));
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 0 20px var(--turquoise),
+                        0 0 40px var(--vasilkovy);
+        }
+        .btn-neon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--turquoise),
+                        0 0 50px var(--vasilkovy);
+        }
+        .locked-overlay {
+            animation: lockPulse 2s infinite alternate ease-in-out;
+        }
+        @keyframes lockPulse {
+            0% { opacity: 0.7; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+        .secret-admin { display: none; }
     </style>
 </head>
 <body>
 
-<!-- Боковая панель -->
+<!-- БОКОВАЯ ПАНЕЛЬ -->
 <div class="sidebar">
-    <div class="px-4 mb-4">
-        <span class="logo">Serverside</span>
+    <div class="p-4">
+        <div onclick="secretClick()" class="logo d-flex align-items-center gap-2">
+            <i class="fas fa-ghost"></i> SERVERSIDE
+        </div>
     </div>
-    <a href="#" class="nav-link active"><i class="fas fa-home me-3"></i> Dashboard</a>
-    <a href="#" class="nav-link"><i class="fas fa-scroll me-3"></i> Все скрипты</a>
-    <a href="#" class="nav-link"><i class="fas fa-gamepad me-3"></i> Для Fluxus</a>
-    <a href="#" class="nav-link"><i class="fas fa-gamepad me-3"></i> Для Solara</a>
-    <a href="#" class="nav-link"><i class="fas fa-star me-3"></i> Популярное</a>
-    <a href="#" class="nav-link"><i class="fas fa-cog me-3"></i> Настройки</a>
+    
+    <a href="#" onclick="showSection('dashboard')" class="nav-link active" id="nav-dashboard">
+        <i class="fas fa-home me-3"></i> Dashboard
+    </a>
+    <a href="#" onclick="showSection('scripts')" class="nav-link" id="nav-scripts">
+        <i class="fas fa-scroll me-3"></i> Все скрипты
+    </a>
+    <a href="#" onclick="showSection('account')" class="nav-link" id="nav-account">
+22:08
+<i class="fas fa-user-circle me-3"></i> Account Info
+    </a>
+    <a href="#" onclick="showSection('visual')" class="nav-link" id="nav-visual">
+        <i class="fas fa-eye me-3"></i> Visual
+    </a>
+    
+    <!-- СЕКРЕТНЫЙ АДМИН ПАНЕЛЬ (только для тебя) -->
+    <a href="#" onclick="showSection('admin')" class="nav-link secret-admin" id="nav-admin">
+        <i class="fas fa-shield-alt me-3"></i> <span class="text-warning">ADMIN PANEL</span>
+    </a>
 </div>
 
-<!-- Верхняя шапка -->
-<div class="header">
-    <div class="d-flex justify-content-between align-items-center">
-        <h4 class="mb-0">Roblox Scripts Dashboard</h4>
-        <div>
-            <span class="text-muted me-3">wave92522-commits</span>
-            <button class="btn btn-sm btn-outline-light">Выйти</button>
+<!-- ШАПКА -->
+<div class="header position-fixed w-100" style="margin-left:270px; z-index:1000;">
+    <div class="d-flex justify-content-between align-items-center px-4 py-3">
+        <h3 class="mb-0 neon-text">Roblox Dashboard</h3>
+        <div class="d-flex align-items-center gap-3">
+            <div id="user-info" class="text-end">
+                <div class="fw-bold" id="username">wave92522-commits</div>
+                <small id="key-status" class="text-success">Ключ активен</small>
+            </div>
+            <button onclick="logout()" class="btn btn-sm btn-outline-light">Выйти</button>
         </div>
     </div>
 </div>
 
-<!-- Основное содержание -->
-<div class="main-content">
-    <div class="row" id="scripts-container"></div>
+<!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
+<div class="main-content pt-5">
+
+    <!-- DASHBOARD -->
+    <div id="section-dashboard">
+        <h2 class="neon-text mb-4">Добро пожаловать в Dashboard</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="neon-card card p-4 text-center">
+                    <h5>Бесплатный ключ (5 часов)</h5>
+                    <button onclick="getFreeKey()" class="btn btn-neon btn-lg w-100 mt-3">GET FREE KEY</button>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="neon-card card p-4 text-center">
+                    <h5>Премиум ключ (15 часов)</h5>
+                    <button onclick="getPremiumKey()" class="btn btn-neon btn-lg w-100 mt-3">GET PREMIUM KEY</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="no-key-banner" class="alert alert-danger neon-card text-center p-4" style="display:none;">
+            <h4>🔒 У тебя нет активного ключа</h4>
+            <p class="mb-0">Получи ключ выше, чтобы разблокировать все разделы</p>
+        </div>
+    </div>
+
+    <!-- ACCOUNT INFO -->
+    <div id="section-account" class="d-none">
+        <h2 class="neon-text mb-4">Account Info</h2>
+        <div class="neon-card card p-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Имя аккаунта:</strong> <span id="acc-name">wave92522-commits</span></p>
+                    <p><strong>Статус ключа:</strong> <span id="acc-key-type" class="text-info">—</span></p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Осталось времени:</strong> <span id="time-left" class="fw-bold text-warning">—</span></p>
+                    <p><strong>Ключ истекает:</strong> <span id="expire-time" class="text-muted">—</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISUAL -->
+    <div id="section-visual" class="d-none">
+        <h2 class="neon-text mb-4">Visual</h2>
+        <div class="neon-card card p-5 text-center">
+            <h4 class="text-muted">Раздел Visual пока пуст</h4>
+            <p class="text-muted">Здесь будут визуальные скрипты</p>
+        </div>
+    </div>
+
+    <!-- SCRIPTS (заблокировано без ключа) -->
+    <div id="section-scripts" class="d-none">
+        <div class="locked-overlay position-relative">
+            <h2 class="neon-text mb-4">Все скрипты</h2>
+            <div id="lock-screen-scripts" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background:rgba(10,15,35,0.95); border-radius:16px; display:none;">
+                <div class="text-center">
+                    <h1 class="neon-text mb-3">🔒</h1>
+                    <h3>Please Get premium or wave key!</h3>
+22:08
+<button onclick="showSection('dashboard')" class="btn btn-neon mt-4">Получить ключ</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4"><div class="neon-card card p-4"><h5>Infinite Yield</h5><button onclick="copyScript('loadstring(game:HttpGet(\"https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source\"))()')" class="btn btn-neon w-100 mt-3">Скопировать</button></div></div>
+                <!-- Добавляй свои скрипты сюда -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL (секретный) -->
+    <div id="section-admin" class="d-none">
+        <h2 class="neon-text mb-4 text-warning">🔧  ADMIN PANEL (только для тебя)</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="neon-card card p-4 text-center">
+                    <h5>Locked site</h5>
+                    <button onclick="lockSite()" class="btn btn-danger w-100">Закрыть сайт для всех</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="neon-card card p-4 text-center">
+                    <h5>Get Premium Key</h5>
+                    <button onclick="adminGetPremium()" class="btn btn-neon w-100">Копировать PREMIUM</button>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="neon-card card p-4 text-center">
+                    <h5>Get Free Key</h5>
+                    <button onclick="adminGetFree()" class="btn btn-neon w-100">Копировать FREE</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    const scripts = [
-        {
-            title: "Infinite Yield",
-            category: "Admin",
-            description: "Мощный админ-скрипт с множеством команд",
-            code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()"
-        },
-        {
-            title: "Fly Script",
-            category: "Movement",
-            description: "Простой и стабильный скрипт полёта",
-            code: "loadstring(game:HttpGet('https://pastebin.com/raw/examplefly'))()"
-        },
-        {
-            title: "ESP + Aimbot",
-            category: "Visual",
-            description: "ESP и aimbot в одном скрипте",
-            code: "loadstring(game:HttpGet('https://pastebin.com/raw/exampleesp'))()"
+    // === СИСТЕМА КЛЮЧЕЙ ===
+    let currentKey = null; // {type: 'free'|'premium', expires: timestamp}
+
+    function loadKey() {
+        const saved = localStorage.getItem('serverside_key');
+        if (saved) {
+            currentKey = JSON.parse(saved);
+            if (Date.now() > currentKey.expires) {
+                currentKey = null;
+                localStorage.removeItem('serverside_key');
+            }
         }
-        // Добавляй сюда новые скрипты
-    ];
+        updateUI();
+    }
 
-    const container = document.getElementById('scripts-container');
-    
-    scripts.forEach((script, index) => {
-21:53
-const card = `
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <h5 class="card-title">${script.title}</h5>
-                            <span class="badge">${script.category}</span>
-                        </div>
-                        <p class="card-text text-muted small">${script.description}</p>
-                        <button class="btn btn-copy w-100 mt-3" onclick="copyScript(${index})">
-                            <i class="fas fa-copy me-2"></i>Скопировать скрипт
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        container.innerHTML += card;
-    });
+    function saveKey(type, hours) {
+        currentKey = {
+            type: type,
+            expires: Date.now() + hours * 3600000
+        };
+        localStorage.setItem('serverside_key', JSON.stringify(currentKey));
+        updateUI();
+    }
 
-    function copyScript(index) {
-        navigator.clipboard.writeText(scripts[index].code).then(() => {
-            alert('✅ Скрипт скопирован в буфер обмена!');
+    function updateUI() {
+        const statusEl = document.getElementById('key-status');
+        const banner = document.getElementById('no-key-banner');
+        
+        if (currentKey) {
+            statusEl.textContent = currentKey.type === 'premium' ? 'PREMIUM' : 'FREE';
+            statusEl.className = currentKey.type === 'premium' ? 'text-success' : 'text-info';
+            banner.style.display = 'none';
+            checkLock();
+        } else {
+            statusEl.textContent = 'Нет ключа';
+            statusEl.className = 'text-danger';
+            banner.style.display = 'block';
+        }
+        updateAccountInfo();
+    }
+
+    function updateAccountInfo() {
+        if (!currentKey) return;
+        const hoursLeft = Math.max(0, Math.floor((currentKey.expires - Date.now()) / 3600000));
+        const minutesLeft = Math.floor(((currentKey.expires - Date.now()) % 3600000) / 60000);
+        
+        document.getElementById('acc-key-type').textContent = currentKey.type.toUpperCase();
+        document.getElementById('time-left').innerHTML = `<span class="text-warning">${hoursLeft}ч ${minutesLeft}м</span>`;
+        document.getElementById('expire-time').textContent = new Date(currentKey.expires).toLocaleString('ru-RU');
+    }
+
+    // Получить ключи из Dashboard
+    function getFreeKey() {
+        saveKey('free', 5);
+        alert('✅ Бесплатный ключ (5 часов) получен!');
+    }
+    function getPremiumKey() {
+        saveKey('premium', 15);
+        alert('✅ Премиум ключ (15 часов) получен!');
+    }
+
+    // Admin panel
+    function adminGetFree() {
+22:08
+const key = 'WAVE-FREE-' + Math.random().toString(36).substring(2,10).toUpperCase();
+        navigator.clipboard.writeText(key);
+        saveKey('free', 5);
+        alert('FREE ключ скопирован: ' + key);
+    }
+    function adminGetPremium() {
+        const key = 'WAVE-PREM-' + Math.random().toString(36).substring(2,10).toUpperCase();
+        navigator.clipboard.writeText(key);
+        saveKey('premium', 15);
+        alert('PREMIUM ключ скопирован: ' + key);
+    }
+
+    function lockSite() {
+        if (confirm('Ты уверен? Сайт будет полностью заблокирован для всех посетителей.')) {
+            localStorage.setItem('site_locked', 'true');
+            document.body.innerHTML = `<div style="height:100vh;background:#000;color:#0ff;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:3rem;text-shadow:0 0 40px #0ff;">🔒 SITE LOCKED BY ADMIN<br><small>Перезагрузи страницу, чтобы снять блокировку</small></div>`;
+        }
+    }
+
+    // Переключение разделов
+    function showSection(section) {
+        if (!currentKey && (section === 'scripts' || section === 'visual' || section === 'account')) {
+            document.getElementById('lock-screen-scripts').style.display = 'flex';
+            setTimeout(() => { document.getElementById('lock-screen-scripts').style.display = 'none'; }, 3000);
+            return;
+        }
+        
+        document.querySelectorAll('.main-content > div').forEach(div => div.classList.add('d-none'));
+        document.getElementById('section-' + section).classList.remove('d-none');
+        
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        const activeNav = document.getElementById('nav-' + section);
+        if (activeNav) activeNav.classList.add('active');
+    }
+
+    function checkLock() {
+        const lockScreens = document.querySelectorAll('.locked-overlay');
+        lockScreens.forEach(screen => {
+            const lock = screen.querySelector('[id^="lock-screen"]');
+            if (lock) lock.style.display = currentKey ? 'none' : 'flex';
         });
     }
-</script>
 
+    // Секретный доступ к Admin panel (клик по логотипу 7 раз)
+    let secretClicks = 0;
+    function secretClick() {
+        secretClicks++;
+        if (secretClicks >= 7) {
+            document.querySelectorAll('.secret-admin').forEach(el => el.style.display = 'block');
+            alert('🔓 Секретный Admin Panel активирован только для тебя!');
+            secretClicks = 0;
+        }
+    }
+
+    function copyScript(code) {
+        navigator.clipboard.writeText(code).then(() => alert('✅ Скрипт скопирован!'));
+    }
+
+    function logout() {
+        if (confirm('Выйти?')) location.reload();
+    }
+
+    // ЗАПУСК
+    window.onload = () => {
+        loadKey();
+        // Авто-обновление таймера
+        setInterval(() => {
+            if (currentKey) updateAccountInfo();
+        }, 60000);
+        
+        // Проверка глобальной блокировки
+        if (localStorage.getItem('site_locked') === 'true') {
+            document.body.innerHTML = `<div style="height:100vh;background:#000;color:#0ff;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:3rem;text-shadow:0 0 40px #0ff;">🔒 SITE LOCKED<br><small>Только владелец может снять блокировку</small></div>`;
+        }
+        
+        console.log('%c✅ Сайт полностью готов. Admin panel — 7 кликов по логотипу SERVERSIDE', 'color:#00f5ff; font-size:18px;');
+    };
+</script>
 </body>
 </html>

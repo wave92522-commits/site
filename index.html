@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wave Server Side | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="locked-mode"> <div class="neon-bg-container">
+        <div class="neon-blob blob-1"></div>
+        <div class="neon-blob blob-2"></div>
+        <div class="neon-blob blob-3"></div>
+    </div>
 
+    <div id="key-auth-overlay" class="overlay">
+        <div class="key-card">
+            <div class="wave-logo-big"><i class="fas fa-water"></i></div>
+            <h2>Wave Key System</h2>
+            <p id="key-status">Уровень 1/5: Пройдите проверку</p>
+            <div class="key-steps">
+                <div class="step active">1</div>
+                <div class="step">2</div>
+                <div class="step">3</div>
+                <div class="step">4</div>
+                <div class="step">5</div>
+            </div>
+            <input type="text" id="key-input" placeholder="Введите ключ здесь...">
+            <div class="key-buttons">
+                <button id="get-key-btn" class="action-btn-neon">Get Key (5 Hours)</button>
+                <button id="submit-key-btn" class="action-btn-neon secondary">Submit</button>
+            </div>
+            <p class="premium-note">Premium (10 Hours) - Only for Owner</p>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <aside class="sidebar desktop-only">
+            <div class="sidebar-header">
+                <div class="wave-logo"><i class="fas fa-water"></i></div>
+                <div class="brand-text">
+                    <span class="main-title">Wave</span>
+                    <span class="sub-title">SS Scripts</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-tab="home"><i class="fas fa-house"></i> Home</a>
+                <a href="#" class="nav-item locked" data-tab="scripts"><i class="fas fa-scroll"></i> Scripts <i class="fas fa-lock lock-icon"></i></a>
+                <a href="#" class="nav-item locked" data-tab="visual"><i class="fas fa-eye"></i> Visual <i class="fas fa-lock lock-icon"></i></a>
+                <a href="#" class="nav-item locked" data-tab="executor"><i class="fas fa-code"></i> Executor <i class="fas fa-lock lock-icon"></i></a>
+                <a href="#" class="nav-item locked" data-tab="stats"><i class="fas fa-chart-bar"></i> Statistics <i class="fas fa-lock lock-icon"></i></a>
+                <a href="#" class="nav-item locked" data-tab="players"><i class="fas fa-users"></i> Players <i class="fas fa-lock lock-icon"></i></a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-inner">
+                
+                <section id="tab-home" class="tab-content active">
+                    <h1>Welcome to <span class="neon-text">Wave</span></h1>
+                    <div class="card registration-card">
+                        <h3><i class="fas fa-user-plus"></i> Registration</h3>
+                        <p>Впишите ваш реальный ник в Roblox для доступа</p>
+                        <input type="text" id="roblox-nick" placeholder="Roblox Username...">
+                        <div class="auth-buttons">
+                            <button class="auth-btn google"><i class="fab fa-google"></i> Google</button>
+                            <button class="auth-btn github"><i class="fab fa-github"></i> GitHub</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-scripts" class="tab-content">
+23:53
+<h1>Script <span class="neon-text">Library</span></h1>
+                    <div class="grid-cards">
+                        <div class="card"><h3>Doors Hub</h3><button class="action-btn-neon sm">Copy</button></div>
+                        <div class="card"><h3>Admin SS</h3><button class="action-btn-neon sm">Copy</button></div>
+                    </div>
+                </section>
+
+                <section id="tab-executor" class="tab-content">
+                    <h1>Cloud <span class="neon-text">Executor</span></h1>
+                    <div class="card">
+                        <textarea id="lua-editor" placeholder="-- Введите ваш Lua скрипт здесь..."></textarea>
+                        <div class="exec-footer">
+                            <button id="run-script" class="action-btn-neon sm">Execute & Check</button>
+                            <div id="exec-status">Status: Ready</div>
+                        </div>
+                        <div id="console-output"></div>
+                    </div>
+                </section>
+
+                <section id="tab-stats" class="tab-content">
+                    <h1>Global <span class="neon-text">Statistics</span></h1>
+                    <div class="stats-grid">
+                        <div class="stat-item card"><h4>Delta</h4><p>Undetected</p></div>
+                        <div class="stat-item card"><h4>Fluxus</h4><p>Maintenance</p></div>
+                        <div class="stat-item card"><h4>Wave SS</h4><p>Active</p></div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

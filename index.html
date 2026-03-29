@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wave SERVER SIDE SCRIPTS</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
+        
         body {
-            background: #111;
+            background: #0a0a0a;
             color: #eee;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -18,46 +20,71 @@
             margin: 0 auto;
         }
         h1 {
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             text-align: center;
-            margin-bottom: 8px;
-            color: #00ff88;
-            text-shadow: 0 0 10px #00ff88;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00f0ff, #00bfff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonShift 3s linear infinite;
+            text-shadow: 0 0 20px #00f0ff, 0 0 40px #00bfff, 0 0 60px #8a2be2;
+        }
+        @keyframes neonShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .key-box {
-            background: #1a1a1a;
-            border: 2px solid #00cc66;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
+            background: #111;
+            border: 3px solid transparent;
+            border-image: linear-gradient(90deg, #00f0ff, #00bfff, #8a2be2) 1;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
             text-align: center;
-            min-height: 80px;
+            box-shadow: 0 0 25px #00f0ff;
+            min-height: 100px;
         }
         .key-text {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             word-break: break-all;
-            margin: 10px 0;
+            margin: 15px 0;
+            color: #00f0ff;
+            text-shadow: 0 0 15px #00bfff;
         }
         button {
-            background: #00cc66;
+            background: linear-gradient(90deg, #00bfff, #00f0ff, #8a2be2);
             color: #000;
             border: none;
-            padding: 14px 24px;
-            font-size: 1.1rem;
+            padding: 16px 28px;
+            font-size: 1.15rem;
+            font-weight: bold;
             cursor: pointer;
-            border-radius: 5px;
-            margin: 6px;
+            border-radius: 8px;
+            margin: 8px;
+            box-shadow: 0 0 20px #00f0ff;
+            transition: all 0.3s;
         }
         button:hover {
-            background: #00ff88;
+            transform: scale(1.05);
+            box-shadow: 0 0 35px #8a2be2;
+            filter: brightness(1.2);
+        }
+        .section {
+            background: #111;
+            padding: 22px;
+            margin: 25px 0;
+            border-radius: 12px;
+            border: 2px solid #222;
         }
         .admin {
-            background: #330000;
-            border: 2px solid #ff3333;
-            padding: 20px;
+            background: #1a0033;
+            border: 3px solid #8a2be2;
+            padding: 25px;
             margin-top: 40px;
-            border-radius: 8px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px #8a2be2;
         }
     </style>
 </head>
@@ -75,24 +102,25 @@
             <button onclick="getPremiumKey()">ПРЕМИУМ КЛЮЧ (15 часов)</button>
         </div>
 
-        <div style="background:#1a1a1a; padding:20px; border-radius:8px; margin:25px 0;">
-            <h2 style="color:#00cc66;">📊  Твой аккаунт</h2>
+        <div class="section">
+            <h2 style="color:#00f0ff; margin-bottom:15px;">📊  Твой аккаунт</h2>
             <p>Имя: <strong>wave92522-commits</strong></p>
-            <p>Статус ключа: <span style="color:#00ff88; font-weight:bold;">АКТИВЕН</span></p>
+            <p>Статус ключа: <span style="color:#00f0ff; font-weight:bold;">АКТИВЕН</span></p>
             <p>Осталось времени: <span id="time-left">4ч 32м</span></p>
         </div>
 
-        <div style="background:#1a1a1a; padding:20px; border-radius:8px;">
-            <h2 style="color:#00cc66;">📜  Скрипты</h2>
+        <div class="section">
+            <h2 style="color:#00f0ff; margin-bottom:15px;">📜  Скрипты</h2>
             <button onclick="copyScript('Infinite Yield')">Скопировать Infinite Yield</button>
         </div>
 
         <!-- ADMIN PANEL (только для тебя) -->
-        <div id="admin-panel" class="admin" style="display:none;">
-            <h2 style="color:#ff6666;">🔧  ADMIN PANEL</h2>
+22:26
+<div id="admin-panel" class="admin" style="display:none;">
+            <h2 style="color:#8a2be2;">🔧  ADMIN PANEL</h2>
             <button onclick="copyPremiumKey()">Копировать PREMIUM ключ</button>
             <button onclick="copyFreeKey()">Копировать FREE ключ</button>
-            <button onclick="lockSite()" style="background:#ff3333;color:white;">Закрыть сайт для всех</button>
+            <button onclick="lockSite()" style="background:linear-gradient(#8a2be2,#00bfff); color:white;">Закрыть сайт для всех</button>
         </div>
     </div>
 
@@ -103,19 +131,16 @@
             currentKey = key;
             const display = document.getElementById("key-display");
             display.innerHTML = `
-                <p style="color:#00ff88; margin-bottom:8px;">✅ ${type} КЛЮЧ ПОЛУЧЕН!</p>
+                <p style="color:#00f0ff; margin-bottom:10px; font-size:1.3rem;">✅ ${type} КЛЮЧ ПОЛУЧЕН!</p>
                 <div class="key-text">${key}</div>
-                <button onclick="copyCurrentKey()" style="background:#00aa55; padding:10px 20px; font-size:1rem;">📋 Скопировать ключ</button>
+                <button onclick="copyCurrentKey()" style="padding:12px 24px; font-size:1rem;">📋 Скопировать ключ</button>
             `;
-            copyCurrentKey(); // автоматически копирует
+            copyCurrentKey(); // авто-копирование
         }
 
         function copyCurrentKey() {
             if (currentKey) {
-                navigator.clipboard.writeText(currentKey).then(() => {
-22:22
-// можно убрать комментарий если хочешь алерт
-                });
+                navigator.clipboard.writeText(currentKey);
             }
         }
 
@@ -132,7 +157,7 @@
         function copyScript(name) {
             const text = `-- ${name} успешно загружен`;
             navigator.clipboard.writeText(text);
-            alert("✅ " + name + " скопирован!");
+            alert("✅ " + name + " скопирован в буфер!");
         }
 
         function copyPremiumKey() {
@@ -146,8 +171,8 @@
         }
 
         function lockSite() {
-            if (confirm("Закрыть сайт для всех?")) {
-                alert("Сайт закрыт для всех пользователей.");
+            if (confirm("Закрыть сайт для всех пользователей?")) {
+                alert("✅ Сайт закрыт (видно только тебе).");
             }
         }
 

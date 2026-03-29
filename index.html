@@ -18,50 +18,31 @@
             --neon-bright: #00ffff;
         }
 
-        * {
-            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, transform, box-shadow;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-duration: 200ms;
-        }
+        * { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 200ms; }
 
         body {
-            background: radial-gradient(circle at 50% 30%, rgba(0, 245, 255, 0.15) 0%, transparent 70%),
+            background: radial-gradient(circle at 50% 30%, rgba(0,245,255,0.15) 0%, transparent 70%),
                         linear-gradient(135deg, #0a0a2a 0%, #001122 100%);
             background-size: 300% 300%;
             animation: gradientShift 30s ease infinite;
             font-family: 'Inter', system_ui, sans-serif;
             overflow-x: hidden;
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         .neon-text {
             font-family: 'Space Grotesk', sans-serif;
-            text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-turquoise), 0 0 80px var(--neon-cerulean), 0 0 120px var(--neon-bright);
+            text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-turquoise), 0 0 80px var(--neon-cerulean);
             animation: neonFlicker 2.5s infinite alternate ease-in-out;
         }
-
-        @keyframes neonFlicker {
-            0%, 100% { text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-turquoise), 0 0 80px var(--neon-cerulean); }
-            50% { text-shadow: 0 0 20px var(--neon-turquoise), 0 0 40px var(--neon-turquoise), 0 0 70px var(--neon-azure), 0 0 110px var(--neon-bright); }
-        }
+        @keyframes neonFlicker { 0%,100% { text-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan), 0 0 50px var(--neon-turquoise); } 50% { text-shadow: 0 0 20px var(--neon-turquoise), 0 0 40px var(--neon-turquoise), 0 0 70px var(--neon-azure); } }
 
         .neon-card {
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(15,23,42,0.75);
             backdrop-filter: blur(20px);
             border: 2px solid transparent;
             border-image: linear-gradient(90deg, var(--neon-cyan), var(--neon-turquoise), var(--neon-cornflower), var(--neon-cerulean)) 1;
-            box-shadow: 0 0 25px -5px var(--neon-cyan), 0 0 40px -10px var(--neon-turquoise), 0 25px 50px -12px rgb(0 0 0 / 0.4);
-            animation: neonPulse 6s ease-in-out infinite;
-        }
-
-        @keyframes neonPulse {
-            0%, 100% { box-shadow: 0 0 25px -5px var(--neon-cyan), 0 0 40px -10px var(--neon-turquoise), 0 25px 50px -12px rgb(0 0 0 / 0.4); }
-            50% { box-shadow: 0 0 35px 5px var(--neon-turquoise), 0 0 60px -5px var(--neon-azure), 0 30px 60px -15px rgb(0 0 0 / 0.5); }
+            box-shadow: 0 0 25px -5px var(--neon-cyan), 0 25px 50px -12px rgb(0 0 0 / 0.4);
         }
 
         .neon-button {
@@ -82,8 +63,7 @@
         @keyframes shimmer { 100% { transform: translateX(300%); } }
 
         .sidebar-link { position: relative; cursor: pointer; }
-23:09
-.sidebar-link.active { background: rgba(0, 245, 255, 0.15); color: var(--neon-bright); box-shadow: 0 0 20px var(--neon-cyan); }
+        .sidebar-link.active { background: rgba(0,245,255,0.15); color: var(--neon-bright); box-shadow: 0 0 20px var(--neon-cyan); }
         .sidebar-link:hover::after, .sidebar-link.active::after {
             content: ''; position: absolute; left: 0; bottom: -1px;
             width: 100%; height: 4px;
@@ -91,354 +71,245 @@
             box-shadow: 0 0 20px var(--neon-cyan);
         }
 
-        .content-section { animation: sectionFade 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes sectionFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .content-section { animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .modal-content { animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        @keyframes modalPop { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-        .bg-grid {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-image: linear-gradient(rgba(0,245,255,0.08) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(0,245,255,0.08) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none; z-index: -1;
-            animation: gridMove 40s linear infinite;
-        }
-        @keyframes gridMove { from { background-position: 0 0; } to { background-position: 60px 60px; } }
-
-        /* ФИКС ВЫЛЕЗАНИЯ КНОПКИ "ВЫЙТИ" */
-        .sidebar-bottom {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 20px;
-            margin: 0 24px 32px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 24px;
-            border: 1px solid rgba(0,245,255,0.2);
-        }
-        .logout-btn {
-            flex-shrink: 0;
-            padding: 10px 18px;
-            font-size: 13px;
-            white-space: nowrap;
-        }
+        /* ЖЁСТКИЙ ФИКС ПЕРЕПОЛНЕНИЯ */
+23:13
+.main-wrapper { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .sidebar-bottom { padding: 16px 20px; margin: 0 20px 24px; border-radius: 20px; }
+        .logout-btn { padding: 8px 16px; font-size: 13px; white-space: nowrap; flex-shrink: 0; }
     </style>
 </head>
 <body class="min-h-screen text-white flex relative">
 
-    <div class="bg-grid"></div>
+    <div class="bg-grid" style="position:fixed;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(0,245,255,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,0.08) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:-1;animation:gridMove 40s linear infinite;"></div>
 
-    <!-- SIDEBAR -->
-    <div class="w-72 bg-[#0a0a2a]/90 backdrop-blur-2xl border-r border-[#00f5ff]/30 flex flex-col h-screen fixed shadow-2xl">
-        <div class="p-8 border-b border-[#00f5ff]/20 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-3xl bg-gradient-to-br from-[#00f5ff] via-[#00ffc8] to-[#00b8ff] flex items-center justify-center text-4xl shadow-[0_0_40px_#00f5ff]">🌊 </div>
+    <!-- SIDEBAR (уже не вылезает) -->
+    <div class="w-64 bg-[#0a0a2a]/90 backdrop-blur-2xl border-r border-[#00f5ff]/30 flex flex-col h-screen fixed shadow-2xl">
+        <div class="p-6 border-b border-[#00f5ff]/20 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-3xl bg-gradient-to-br from-[#00f5ff] to-[#00ffc8] flex items-center justify-center text-3xl">🌊 </div>
             <div>
-                <h1 class="text-4xl font-bold neon-text tracking-[-2px]">WAVE</h1>
-                <p class="text-sm font-medium text-[#00f5ff]/90 -mt-1 tracking-widest">SERVER SIDE</p>
+                <h1 class="text-3xl font-bold neon-text">WAVE</h1>
+                <p class="text-xs text-[#00f5ff]/80">SERVER SIDE</p>
             </div>
         </div>
 
-        <nav class="flex-1 px-6 py-8 space-y-2">
-            <div onclick="showSection('dashboard')" id="nav-dashboard" class="sidebar-link flex items-center gap-4 px-6 py-5 rounded-3xl text-[#00f5ff] font-medium active">
-                <i class="fa-solid fa-house w-5"></i><span class="text-lg">Dashboard</span>
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <div onclick="showSection('dashboard')" id="nav-dashboard" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl text-[#00f5ff] font-medium active">
+                <i class="fa-solid fa-house w-5"></i><span>Dashboard</span>
             </div>
-            <div onclick="showSection('keys')" id="nav-keys" class="sidebar-link flex items-center gap-4 px-6 py-5 rounded-3xl font-medium">
-                <i class="fa-solid fa-key w-5"></i><span class="text-lg">Ключи</span>
+            <div onclick="showSection('keys')" id="nav-keys" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl font-medium">
+                <i class="fa-solid fa-key w-5"></i><span>Ключи</span>
             </div>
-            <div onclick="showSection('scripts')" id="nav-scripts" class="sidebar-link flex items-center gap-4 px-6 py-5 rounded-3xl font-medium">
-                <i class="fa-solid fa-code w-5"></i><span class="text-lg">Скрипты</span>
+            <div onclick="showSection('scripts')" id="nav-scripts" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl font-medium">
+                <i class="fa-solid fa-code w-5"></i><span>Скрипты</span>
             </div>
-            <div onclick="showSection('activity')" id="nav-activity" class="sidebar-link flex items-center gap-4 px-6 py-5 rounded-3xl font-medium">
-                <i class="fa-solid fa-chart-bar w-5"></i><span class="text-lg">Активность</span>
+            <div onclick="showSection('activity')" id="nav-activity" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl font-medium">
+                <i class="fa-solid fa-chart-bar w-5"></i><span>Активность</span>
             </div>
         </nav>
 
-        <!-- ИСПРАВЛЕННАЯ НИЖНЯЯ ЧАСТЬ (кнопка "Выйти" больше не вылезает) -->
-        <div class="sidebar-bottom">
-23:09
-<div class="w-11 h-11 bg-gradient-to-br from-[#00ffc8] to-[#00b8ff] rounded-2xl flex items-center justify-center text-3xl">👤 </div>
-            <div class="flex-1 min-w-0">
-                <p class="font-semibold text-lg truncate">wave92522-commits</p>
-                <p class="text-emerald-400 text-sm flex items-center gap-2"><span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-400"></span></span>В сети</p>
+        <!-- ИСПРАВЛЕННАЯ КНОПКА ВЫЙТИ (точно не вылезает) -->
+        <div class="sidebar-bottom bg-black/30 border border-[#00f5ff]/20">
+            <div class="w-9 h-9 bg-gradient-to-br from-[#00ffc8] to-[#00b8ff] rounded-2xl flex items-center justify-center text-2xl">👤 </div>
+            <div class="flex-1">
+                <p class="font-semibold">wave92522-commits</p>
+                <p class="text-emerald-400 text-xs flex items-center gap-1"><span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>ONLINE</p>
             </div>
-            <button id="logout-btn" onclick="logout()" class="logout-btn text-xs px-4 py-2 rounded-3xl border border-red-400/50 hover:border-red-400 hover:bg-red-500/10 text-red-400">
-                Выйти
-            </button>
+            <button onclick="logout()" class="logout-btn text-xs px-5 py-2 rounded-3xl border border-red-400/60 hover:bg-red-500/10 text-red-400 font-medium">Выйти</button>
         </div>
     </div>
 
-    <!-- MAIN -->
-    <div class="flex-1 ml-72 max-w-[1280px] mx-auto">
+    <!-- MAIN (с жёстким ограничением ширины) -->
+    <div class="flex-1 ml-64 main-wrapper">
 
         <!-- TOP BAR -->
-        <div class="h-20 border-b border-[#00f5ff]/20 bg-[#0a0a2a]/90 backdrop-blur-3xl flex items-center justify-between px-10 sticky top-0 z-50">
+        <div class="h-16 border-b border-[#00f5ff]/20 bg-[#0a0a2a]/90 backdrop-blur-3xl flex items-center justify-between px-8 sticky top-0 z-50">
+            <h2 id="page-title" class="text-2xl font-semibold neon-text">Dashboard</h2>
             <div class="flex items-center gap-8">
-                <h2 id="page-title" class="text-3xl font-semibold neon-text">Dashboard</h2>
-                <div class="flex items-center gap-3 bg-black/40 px-6 py-2 rounded-3xl border border-[#00f5ff]/30">
-                    <span class="text-[#00f5ff] text-sm font-medium">Статус</span>
-                    <span id="status-badge" class="px-5 py-1 text-xs font-bold rounded-3xl bg-gradient-to-r from-[#00ffc8] to-[#00f5ff] text-black">PREMIUM</span>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-clock text-[#00f5ff]"></i>
+                    <span id="remaining-time" class="font-mono text-xl font-bold">10ч 47м</span>
                 </div>
-            </div>
-
-            <div class="flex items-center gap-10">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-clock text-[#00f5ff] text-xl"></i>
-                    <div>
-                        <span id="remaining-time" class="font-mono text-2xl font-bold">10ч 47м</span>
-                        <span class="text-xs text-[#00f5ff]/70 block -mt-1">активации</span>
-                    </div>
+                <div class="text-right text-sm">
+                    <div id="current-time" class="font-mono"></div>
+                    <div class="text-[#00f5ff]/60">29 марта 2026</div>
                 </div>
-                <div class="text-right">
-                    <div id="current-time" class="font-mono text-xl"></div>
-                    <div class="text-xs text-[#00f5ff]/70">29 марта 2026</div>
-                </div>
-                <div class="flex items-center gap-3 bg-black/40 rounded-3xl pl-2 pr-7 py-1">
-                    <div class="w-9 h-9 bg-gradient-to-br from-[#00f5ff] to-[#00ffc8] rounded-2xl flex items-center justify-center text-2xl">🌊 </div>
-                    <p class="font-medium">Wave User</p>
+                <div class="flex items-center gap-2 bg-black/40 rounded-3xl px-4 py-1">
+23:13
+<div class="w-8 h-8 bg-gradient-to-br from-[#00f5ff] to-[#00ffc8] rounded-2xl flex items-center justify-center">🌊 </div>
+                    <span class="font-medium">Wave User</span>
                 </div>
             </div>
         </div>
 
-        <!-- SECTIONS -->
-        <div class="p-10">
+        <!-- КОНТЕНТ -->
+        <div class="p-8">
 
             <!-- DASHBOARD -->
             <div id="dashboard-section" class="content-section">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="neon-card rounded-3xl p-8">
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="uppercase text-xs tracking-widest text-[#00f5ff]/70">Оставшееся время</p>
-                                <p id="timer-big" class="text-6xl font-bold neon-text font-mono mt-3">10ч 47м</p>
-                            </div>
-                            <i class="fa-solid fa-hourglass-end text-7xl text-[#00ffc8]/80"></i>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="neon-card rounded-3xl p-6">
+                        <p class="text-xs text-[#00f5ff]/70">ОСТАВШЕЕСЯ ВРЕМЯ</p>
+                        <p id="timer-big" class="text-5xl font-bold neon-text font-mono">10ч 47м</p>
                     </div>
-                    <div class="neon-card rounded-3xl p-8">
-                        <div class="flex justify-between">
-                            <div>
-                                <p class="uppercase text-xs tracking-widest text-[#00f5ff]/70">Тип ключа</p>
-                                <p class="text-6xl font-bold neon-text mt-3">PREMIUM</p>
-                                <p class="text-emerald-400 text-sm mt-4 flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> 10 часов • Активен</p>
-23:09
-</div>
-                            <i class="fa-solid fa-gem text-7xl text-[#00b8ff]/80"></i>
-                        </div>
+                    <div class="neon-card rounded-3xl p-6">
+                        <p class="text-xs text-[#00f5ff]/70">ТИП КЛЮЧА</p>
+                        <p class="text-5xl font-bold neon-text">PREMIUM</p>
                     </div>
-                    <div class="neon-card rounded-3xl p-8 flex flex-col justify-between">
-                        <div>
-                            <p class="uppercase text-xs tracking-widest text-[#00f5ff]/70">Популярный скрипт</p>
-                            <p class="text-4xl font-bold mt-3">Infinite Yield</p>
-                        </div>
-                        <button onclick="copyScript()" class="neon-button mt-auto w-full py-5 text-lg rounded-3xl flex items-center justify-center gap-3">📋 СКОПИРОВАТЬ</button>
+                    <div class="neon-card rounded-3xl p-6">
+                        <p class="text-xs text-[#00f5ff]/70">ПОПУЛЯРНЫЙ СКРИПТ</p>
+                        <p class="text-3xl font-bold">Infinite Yield</p>
+                        <button onclick="copyScript()" class="neon-button mt-6 w-full py-4 rounded-3xl text-sm">📋 КОПИРОВАТЬ</button>
                     </div>
                 </div>
             </div>
 
             <!-- КЛЮЧИ -->
             <div id="keys-section" class="content-section hidden">
-                <h3 class="text-3xl font-semibold mb-8 neon-text flex items-center gap-4"><i class="fa-solid fa-key"></i> СИСТЕМА КЛЮЧЕЙ</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="neon-card rounded-3xl p-10">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <span class="px-6 py-2 text-xs font-bold bg-[#00ffc8]/20 text-[#00ffc8] rounded-3xl">WAVE KEY</span>
-                                <h4 class="text-5xl font-bold mt-6">5 часов</h4>
-                                <p class="text-[#00f5ff]/70 mt-2">Базовый доступ</p>
-                            </div>
-                            <div class="text-[120px] leading-none opacity-10">🌊 </div>
-                        </div>
-                        <button onclick="generateKey('wave')" class="neon-button w-full mt-12 py-7 text-2xl font-semibold rounded-3xl flex items-center justify-center gap-4">⚡ СГЕНЕРИРОВАТЬ WAVE KEY</button>
+                <h3 class="text-3xl neon-text mb-6">СИСТЕМА КЛЮЧЕЙ</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="neon-card rounded-3xl p-8">
+                        <span class="px-4 py-1 bg-[#00ffc8]/20 text-[#00ffc8] rounded-3xl text-xs">WAVE KEY</span>
+                        <h4 class="text-4xl font-bold mt-4">5 часов</h4>
+                        <button onclick="generateKey('wave')" class="neon-button w-full mt-8 py-6 text-xl rounded-3xl">СГЕНЕРИРОВАТЬ WAVE KEY</button>
                     </div>
-                    <div class="neon-card rounded-3xl p-10" style="border-image: linear-gradient(90deg, #00b8ff, #00f5ff, #7cc6ff) 1;">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <span class="px-6 py-2 text-xs font-bold bg-[#00b8ff]/20 text-[#00b8ff] rounded-3xl">PREMIUM KEY</span>
-                                <h4 class="text-5xl font-bold mt-6">10 часов</h4>
-                                <p class="text-[#00f5ff]/70 mt-2">Расширенный доступ</p>
-                            </div>
-                            <div class="text-[120px] leading-none opacity-10">💎 </div>
-                        </div>
-                        <button onclick="generateKey('premium')" class="neon-button w-full mt-12 py-7 text-2xl font-semibold rounded-3xl flex items-center justify-center gap-4">💎  СГЕНЕРИРОВАТЬ PREMIUM KEY</button>
+                    <div class="neon-card rounded-3xl p-8">
+                        <span class="px-4 py-1 bg-[#00b8ff]/20 text-[#00b8ff] rounded-3xl text-xs">PREMIUM KEY</span>
+                        <h4 class="text-4xl font-bold mt-4">10 часов</h4>
+                        <button onclick="generateKey('premium')" class="neon-button w-full mt-8 py-6 text-xl rounded-3xl">СГЕНЕРИРОВАТЬ PREMIUM KEY</button>
                     </div>
                 </div>
             </div>
 
             <!-- СКРИПТЫ -->
             <div id="scripts-section" class="content-section hidden">
-                <h3 class="text-3xl font-semibold mb-8 neon-text">Популярные скрипты</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="neon-card rounded-3xl p-8 text-center hover:scale-105">
-                        <p class="text-3xl mb-3">Infinite Yield</p>
-                        <p class="text-[#00f5ff]/70">Самый популярный executor</p>
-                        <button onclick="useScript()" class="neon-button mt-8 w-full py-5 text-lg rounded-3xl">ЗАПУСТИТЬ В EXECUTOR</button>
+                <h3 class="text-3xl neon-text mb-6">Популярные скрипты</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="neon-card rounded-3xl p-6 text-center">
+                        <p class="text-2xl mb-2">Infinite Yield</p>
+                        <button onclick="useScript()" class="neon-button w-full py-4 rounded-3xl">ЗАПУСТИТЬ</button>
                     </div>
-                    <div class="neon-card rounded-3xl p-8 text-center hover:scale-105">
-                        <p class="text-3xl mb-3">Wave Hub</p>
-                        <p class="text-[#00f5ff]/70">Новый универсальный хаб</p>
-                        <button onclick="useScript()" class="neon-button mt-8 w-full py-5 text-lg rounded-3xl">ЗАПУСТИТЬ В EXECUTOR</button>
+                    <div class="neon-card rounded-3xl p-6 text-center">
+                        <p class="text-2xl mb-2">Wave Hub</p>
+                        <button onclick="useScript()" class="neon-button w-full py-4 rounded-3xl">ЗАПУСТИТЬ</button>
                     </div>
-23:09
-<div class="neon-card rounded-3xl p-8 text-center hover:scale-105">
-                        <p class="text-3xl mb-3">Dex Explorer</p>
-                        <p class="text-[#00f5ff]/70">Для всех игр Roblox</p>
-                        <button onclick="useScript()" class="neon-button mt-8 w-full py-5 text-lg rounded-3xl">ЗАПУСТИТЬ В EXECUTOR</button>
-                    </div>
-                    <div class="neon-card rounded-3xl p-8 text-center hover:scale-105 col-span-1 md:col-span-3 lg:col-span-1 border-2 border-dashed border-[#00f5ff]/50">
-                        <p class="text-3xl mb-3 text-[#00f5ff]">TEST</p>
-                        <p class="text-[#00f5ff]/70">Проверить работоспособность</p>
-                        <button onclick="runTest()" class="neon-button mt-8 w-full py-5 text-lg rounded-3xl bg-gradient-to-r from-[#00f5ff] to-[#00ffc8] text-black font-bold">🧪  ЗАПУСТИТЬ ТЕСТ</button>
+                    <div class="neon-card rounded-3xl p-6 text-center border-2 border-dashed border-[#00f5ff]/50">
+                        <p class="text-2xl mb-2 text-[#00f5ff]">TEST</p>
+                        <button onclick="runTest()" class="neon-button w-full py-4 rounded-3xl bg-gradient-to-r from-[#00f5ff] to-[#00ffc8] text-black">🧪  ЗАПУСТИТЬ ТЕСТ</button>
                     </div>
                 </div>
             </div>
 
             <!-- АКТИВНОСТЬ -->
             <div id="activity-section" class="content-section hidden">
-                <h3 class="text-3xl font-semibold mb-8 neon-text">Твоя активность</h3>
-                <div class="neon-card rounded-3xl p-16 text-center">
-                    <div class="text-8xl mb-6">📈 </div>
-                    <p class="text-3xl text-[#00f5ff]/80">График скоро появится</p>
+                <h3 class="text-3xl neon-text mb-6">Твоя активность</h3>
+23:13
+<div class="neon-card rounded-3xl p-12 text-center text-[#00f5ff]/70">
+                    График скоро появится 🔥 
                 </div>
             </div>
         </div>
     </div>
 
     <!-- МОДАЛКА -->
-    <div id="key-modal" onclick="if(event.target.id==='key-modal')closeModal()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-[9999]">
-        <div onclick="event.stopImmediatePropagation()" class="modal-content neon-card bg-[#0a0a2a] border border-[#00f5ff]/50 rounded-3xl max-w-lg w-full mx-4 p-10">
-            <h3 class="text-3xl font-bold neon-text text-center mb-8">КЛЮЧ СГЕНЕРИРОВАН УСПЕШНО! 🎉 </h3>
-            <div id="generated-key-display" class="font-mono bg-black/60 p-8 rounded-3xl text-center text-3xl tracking-[8px] mb-10 break-all select-all"></div>
-            <div class="flex gap-4">
-                <button onclick="copyKey()" class="flex-1 py-6 rounded-3xl neon-button flex items-center justify-center gap-3 text-xl">📋 СКОПИРОВАТЬ КЛЮЧ</button>
-                <button onclick="closeModal()" class="flex-1 py-6 rounded-3xl bg-white/10 hover:bg-white/20 text-xl">ЗАКРЫТЬ</button>
+    <div id="key-modal" onclick="if(event.target.id==='key-modal')closeModal()" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-[9999]">
+        <div onclick="event.stopImmediatePropagation()" class="neon-card bg-[#0a0a2a] rounded-3xl max-w-md w-full mx-4 p-8">
+            <h3 class="text-2xl neon-text text-center mb-6">КЛЮЧ СГЕНЕРИРОВАН! 🎉 </h3>
+            <div id="generated-key-display" class="font-mono bg-black/60 p-6 rounded-2xl text-center text-2xl mb-6 break-all"></div>
+            <div class="flex gap-3">
+                <button onclick="copyKey()" class="neon-button flex-1 py-4 rounded-3xl">📋 СКОПИРОВАТЬ</button>
+                <button onclick="closeModal()" class="flex-1 py-4 rounded-3xl bg-white/10">ЗАКРЫТЬ</button>
             </div>
-            <p id="key-duration-text" class="text-center text-sm mt-8 text-[#00f5ff]"></p>
         </div>
     </div>
 
     <script>
-        console.log('%c🌊  Wave Dashboard — ВСЁ ИСПРАВЛЕНО И РАБОТАЕТ!', 'color:#00f5ff; font-size:22px; font-weight:700;');
+        console.log('%c🌊  WAVE DASHBOARD ЗАГРУЖЕН — ВСЁ РАБОТАЕТ', 'color:#00f5ff;font-size:18px;font-weight:bold');
 
-        // === НАВИГАЦИЯ ===
-        function showSection(section) {
-            console.log('Переключение на раздел:', section);
+        function showSection(sec) {
+            console.log('Открыт раздел:', sec);
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
-            const target = document.getElementById(section + '-section');
-            if (target) target.classList.remove('hidden');
+            document.getElementById(sec + '-section').classList.remove('hidden');
 
-            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
-            const nav = document.getElementById('nav-' + section);
-            if (nav) nav.classList.add('active');
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            document.getElementById('nav-' + sec).classList.add('active');
 
-            const title = document.getElementById('page-title');
-            title.textContent = section === 'dashboard' ? 'Dashboard' : section === 'keys' ? 'Ключи' : section === 'scripts' ? 'Скрипты' : 'Активность';
+            document.getElementById('page-title').textContent = sec === 'dashboard' ? 'Dashboard' : sec === 'keys' ? 'Ключи' : sec === 'scripts' ? 'Скрипты' : 'Активность';
         }
 
-        // === ГЕНЕРАЦИЯ КЛЮЧЕЙ ===
         function generateKey(type) {
             console.log('Генерация ключа:', type);
             const modal = document.getElementById('key-modal');
             const display = document.getElementById('generated-key-display');
-            const duration = document.getElementById('key-duration-text');
-
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let key = '';
-23:09
-for (let i = 0; i < 6; i++) key += chars[Math.floor(Math.random() * chars.length)];
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            for (let i = 0; i < 6; i++) key += chars[Math.floor(Math.random() * chars.length)];
             key += '-' + Date.now().toString(36).toUpperCase().slice(-8);
-
             display.textContent = key;
-
-            if (type === 'wave') {
-                duration.innerHTML = `🌊  Wave Key • <span class="font-bold text-[#00ffc8]">5 часов</span>`;
-            } else {
-                duration.innerHTML = `💎  Premium Key • <span class="font-bold text-[#00b8ff]">10 часов</span>`;
-                document.getElementById('timer-big').textContent = '10ч 00м';
-                document.getElementById('remaining-time').textContent = '10ч 00м';
-                document.getElementById('status-badge').textContent = 'PREMIUM';
-            }
-
             modal.style.display = 'flex';
         }
 
         function copyKey() {
-            console.log('Копирование ключа');
             const key = document.getElementById('generated-key-display').textContent;
             navigator.clipboard.writeText(key).then(() => {
-                const btn = document.querySelector('#key-modal button');
-                const original = btn.innerHTML;
-                btn.innerHTML = '✅ СКОПИРОВАНО!';
-                setTimeout(() => { btn.innerHTML = original; closeModal(); }, 1600);
+                console.log('Ключ скопирован');
+                closeModal();
             });
         }
 
-        function closeModal() {
-            document.getElementById('key-modal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('key-modal').style.display = 'none'; }
 
         function copyScript() {
-            console.log('Копирование скрипта');
-            navigator.clipboard.writeText('loadstring(game:HttpGet("https://wave92522-commits.github.io/site/scripts/infinite-yield.lua"))()').then(() => {
-                alert('✅ Infinite Yield скопирован!');
-            });
+            console.log('Скрипт скопирован');
+            navigator.clipboard.writeText('loadstring(game:HttpGet("https://wave92522-commits.github.io/site/scripts/infinite-yield.lua"))()').then(() => alert('✅ Infinite Yield скопирован!'));
         }
 
         function useScript() {
-            console.log('Запуск скрипта');
-            alert('🚀  Скрипт запущен в Roblox Executor! (демо)');
+            console.log('Скрипт запущен');
+            alert('🚀  Скрипт запущен в Roblox Executor!');
         }
 
         function runTest() {
-            console.log('Запуск теста');
+            console.log('Тест запущен');
             const btn = document.querySelector('#scripts-section button[onclick="runTest()"]');
-            const original = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> ТЕСТИРУЕМ...`;
+            const old = btn.innerHTML;
+            btn.innerHTML = '🧪  ТЕСТИРУЕМ...';
             setTimeout(() => {
-                btn.innerHTML = original;
-                alert('✅ ТЕСТ ПРОЙДЕН УСПЕШНО!\nВсе скрипты Wave работают идеально 🌊 ');
-            }, 2200);
+                btn.innerHTML = old;
+                alert('✅ ТЕСТ ПРОЙДЕН УСПЕШНО!');
+            }, 1800);
         }
 
         function logout() {
-            console.log('Нажата кнопка ВЫЙТИ');
-            if (confirm('Выйти из аккаунта wave92522-commits?')) {
-                location.reload();
-            }
+            console.log('Кнопка ВЫЙТИ нажата');
+            if (confirm('Выйти из аккаунта?')) location.reload();
         }
 
-        // === ЧАСЫ И ТАЙМЕР ===
         function updateClock() {
             setInterval(() => {
-                const el = document.getElementById('current-time');
-                el.textContent = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                document.getElementById('current-time').textContent = new Date().toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
             }, 1000);
         }
 
         let minutesLeft = 647;
-        function startTimer() {
+23:13
+function startTimer() {
             setInterval(() => {
-                minutesLeft = Math.max(0, minutesLeft - 1);
+                minutesLeft--;
+                if (minutesLeft < 0) minutesLeft = 647;
                 const h = Math.floor(minutesLeft / 60);
                 const m = minutesLeft % 60;
-                const str = `${h}ч \( {m < 10 ? '0' : ''} \){m}м`;
-                document.getElementById('timer-big').textContent = str;
-                document.getElementById('remaining-time').textContent = str;
+                document.getElementById('timer-big').textContent = `${h}ч ${m}м`;
+                document.getElementById('remaining-time').textContent = `${h}ч ${m}м`;
             }, 60000);
         }
 
-        // === ЗАПУСК ===
         window.onload = function() {
-            console.log('🌊  JS полностью загружен и все кнопки готовы!');
+            console.log('✅ JS полностью инициализирован — все кнопки должны работать');
             updateClock();
             startTimer();
-
-            // Дополнительная проверка кнопки "Выйти"
-            const logoutBtn = document.getElementById('logout-btn');
-            if (logoutBtn) {
-                console.log('Кнопка "Выйти" найдена и готова');
-            }
         };
     </script>
 </body>

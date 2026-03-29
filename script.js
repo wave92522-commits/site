@@ -1,87 +1,122 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let currentStep = 1;
-    let isAuthorized = false;
+    let currentStep = 0; // Начинаем с нуля
+    const totalSteps = 5;
     let generatedKey = "";
+    let isAuthorized = false;
 
-    // 1. Генерация рандомного ключа
-    function generateRandomKey(prefix) {
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        let result = prefix + "-";
-        for (let i = 0; i < 12; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
+    // --- ФУНКЦИИ КЛЮЧЕЙ ---
+
+    const getKeyBtn = document.getElementById('get-key-btn');
+    const submitBtn = document.getElementById('submit-key-btn');
+    const keyInput = document.getElementById('key-input');
+    const statusText = document.getElementById('key-status');
+    const steps = document.querySelectorAll('.step');
+
+    // Функция генерации рандомного ключа
+    function createKey() {
+        const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+        let str = "WAVE-";
+        for (let i = 0; i < 10; i++) {
+            str += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-        return result;
+        return str;
     }
 
-    // 2. Система уровней (Get Key)
-    const getKeyBtn = document.getElementById('get-key-btn');
+    // Кнопка "Get Key"
     getKeyBtn.addEventListener('click', () => {
-        if (currentStep < 5) {
+        if (currentStep < totalSteps) {
+            // Анимация шагов
+            steps[currentStep].classList.add('active');
             currentStep++;
-            document.getElementById('key-status').innerText = `Уровень ${currentStep}/5: Пройдите проверку`;
-            const steps = document.querySelectorAll('.step');
-            steps[currentStep-1].classList.add('active');
-            alert("Переход на следующий уровень рекламы...");
-        } else {
-            generatedKey = generateRandomKey("WAVE");
-            alert("Ваш временный ключ (5ч): " + generatedKey);
-            console.log("Key:", generatedKey);
+            
+            if (currentStep < totalSteps) {
+                statusText.innerText = `Уровень ${currentStep + 1}/5: Пройдите проверку`;
+                alert("Рекламное звено пройдено. Переходим к следующему...");
+            } else {
+                generatedKey = createKey();
+                statusText.innerText = "Ключ успешно сгенерирован!";
+                statusText.style.color = "#00f2fe";
+                alert("Ваш ключ: " + generatedKey + "\nСкопируйте его в поле ввода.");
+                keyInput.value = generatedKey; // Сразу подставляем для удобства теста
+            }
         }
     });
 
-    // 3. Проверка ключа
-    document.getElementById('submit-key-btn').addEventListener('click', () => {
-        const input = document.getElementById('key-input').value;
-        const premiumKey = "WAVE-OWNER-777"; // Твой личный ключ
+    // Кнопка "Submit"
+    submitBtn.addEventListener('click', () => {
+        const val = keyInput.value.trim();
+        const OWNER_KEY = "WAVE-OWNER-777";
 
-        if (input === generatedKey && generatedKey !== "") {
-            unlockSite("User");
-        } else if (input === premiumKey) {
-            unlockSite("Owner (Premium)");
+        if (val === OWNER_KEY) {
+            unlockSite("Owner (10 Hours)");
+        } else if (val === generatedKey && generatedKey !== "") {
+            unlockSite("User (5 Hours)");
         } else {
-            alert("Неверный ключ!");
+            keyInput.classList.add('shake');
+            setTimeout(() => keyInput.classList.remove('shake'), 400);
+            alert("Неверный или просроченный ключ!");
         }
     });
 
     function unlockSite(role) {
         isAuthorized = true;
-        document.getElementById('key-auth-overlay').style.display = 'none';
-        document.body.classList.remove('locked-mode');
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('locked'));
-        document.querySelectorAll('.lock-icon').forEach(el => el.remove());
-        alert(`Добро пожаловать, ${role}! Доступ разрешен.`);
+        const overlay = document.getElementById('key-auth-overlay');
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            document.body.classList.remove('locked-mode');
+            
+            // Снимаем замки со всех вкладок
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('locked');
+                const lock = item.querySelector('.lock-icon');
+                if (lock) lock.remove();
+            });
+
+            alert("Доступ открыт: " + role);
+        }, 500);
     }
 
-    // 4. Логика "Замка" на вкладках
-    const navItems = document.querySelectorAll('.nav-item');
+    // --- НАВИГАЦИЯ ---
+    const navItems = document.querySelectorAll('.nav-item, .mob-nav-item');
+    
     navItems.forEach(item => {
         item.addEventListener('click', function(e) {
-            if (!isAuthorized && this.getAttribute('data-tab') !== 'home') {
-                e.preventDefault();
+            e.preventDefault();
+            
+            const tabName = this.getAttribute('data-tab');
+            
+            // Если сайт закрыт и это не Home
+            if (!isAuthorized && tabName !== 'home') {
                 this.classList.add('shake');
                 setTimeout(() => this.classList.remove('shake'), 400);
                 return;
             }
+
             // Переключение вкладок
-            const tabId = "tab-" + this.getAttribute('data-tab');
-            document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            navItems.forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            const targetTab = document.getElementById('tab-' + tabName);
+            if (targetTab) targetTab.classList.add('active');
+
+            // Активная кнопка в меню
+            navItems.forEach(nav => nav.classList.remove('active'));
             this.classList.add('active');
         });
     });
-
-    // 5. Мини-валидатор Lua (Executor)
-    document.getElementById('run-script')?.addEventListener('click', () => {
-        const code = document.getElementById('lua-editor').value;
-        const output = document.getElementById('console-output');
-        
-        if (code.includes('print') || code.includes('wait') || code.includes('HttpGet')) {
-            output.style.color = "#2ecc71";
-            output.innerText = "> Script is valid. No syntax errors found.";
-        } else {
-            output.style.color = "#ff4a4a";
-            output.innerText = "> Error: LUA Syntax Error near 'line 1'. Expected function call.";
-        }
-    });
+23:57
+// --- КОПИРОВАНИЕ (Исправлено для кнопок на главной) ---
+    const mainCopyBtn = document.getElementById('copy-btn');
+    if (mainCopyBtn) {
+        mainCopyBtn.addEventListener('click', () => {
+            const code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/wave92522-commits/site/main/loader.lua"))()';
+            navigator.clipboard.writeText(code).then(() => {
+                const oldText = mainCopyBtn.innerHTML;
+                mainCopyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => mainCopyBtn.innerHTML = oldText, 2000);
+            });
+        });
+    }
 });

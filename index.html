@@ -3,193 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wave SERVER SIDE SCRIPTS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>JS TEST - Wave SERVER SIDE</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        body { font-family: 'Inter', system-ui, sans-serif; }
-        .neon-cyan { text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00bfff; }
-        .sidebar-active { background: linear-gradient(90deg, #00bfff, #00f0ff); color: #000; font-weight: 600; }
-        @keyframes neonPulse { 0% { text-shadow: 0 0 10px #00f0ff; } 50% { text-shadow: 0 0 30px #8a2be2; } 100% { text-shadow: 0 0 10px #00f0ff; } }
-        .neon-text { animation: neonPulse 2s infinite; }
+        body { background: #000; color: #0ff; font-family: Arial; text-align: center; padding: 50px; }
+        button { padding: 20px 40px; font-size: 24px; background: #00f0ff; color: #000; border: none; border-radius: 10px; cursor: pointer; }
     </style>
 </head>
-<body class="bg-[#0a0a0a] text-white flex min-h-screen">
-    <!-- SIDEBAR exactly like serverside.fun -->
-    <div class="w-64 bg-[#111] border-r border-[#222] flex flex-col">
-        <div class="p-6 border-b border-[#222]">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-waveform text-[#00f0ff] text-3xl neon-cyan"></i>
-                <h1 class="text-2xl font-bold tracking-tighter neon-text">Wave SERVER SIDE</h1>
-            </div>
-        </div>
-        
-        <nav class="flex-1 p-3">
-            <a href="#" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-xl mb-1 text-black">
-                <i class="fa-solid fa-house"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a] mb-1">
-                <i class="fa-solid fa-key"></i>
-                <span>My Keys</span>
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a] mb-1">
-                <i class="fa-solid fa-code"></i>
-                <span>Scripts</span>
-            </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a] mb-1">
-                <i class="fa-solid fa-eye"></i>
-                <span>Visuals</span>
-            </a>
-            
-            <div id="admin-menu" class="hidden mt-8">
-                <div class="text-[#8a2be2] text-xs font-bold px-4 mb-2">ADMIN ONLY</div>
-                <a href="#" onclick="lockSite()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a]">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>Admin Panel</span>
-                </a>
-            </div>
-        </nav>
-        
-        <div class="p-4 border-t border-[#222]">
-            <div class="flex items-center gap-3 bg-[#1a1a1a] rounded-2xl p-3">
-                <div class="w-9 h-9 bg-[#00f0ff] rounded-full flex items-center justify-center text-black font-bold">W</div>
-                <div>
-                    <div class="font-medium">wave92522-commits</div>
-                    <div class="text-xs text-[#00f0ff]">Premium User</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="flex-1 p-8">
-        <div class="flex justify-between items-center mb-10">
-            <div>
-                <h2 class="text-4xl font-semibold neon-text">Dashboard</h2>
-                <p class="text-[#aaa]">Welcome back, wave92522-commits</p>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="bg-[#1a1a1a] px-5 py-2 rounded-3xl flex items-center gap-2">
-                    <i class="fa-solid fa-clock text-[#00f0ff]"></i>
-                    <span id="time-left" class="font-medium">4h 47m left</span>
-                </div>
-22:38
-<button onclick="logout()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-6 py-2 rounded-3xl transition flex items-center gap-2">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Logout
-                </button>
-            </div>
-        </div>
-
-        <!-- GET KEY SECTION -->
-        <div class="bg-[#111] border border-[#222] rounded-3xl p-8 mb-8">
-            <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
-                <i class="fa-solid fa-key text-[#00f0ff]"></i>
-                Get Key
-            </h3>
-            
-            <div class="flex flex-wrap gap-4">
-                <button onclick="getFreeKey()" 
-                        class="flex-1 min-w-[240px] bg-gradient-to-r from-[#00bfff] to-[#00f0ff] text-black font-bold py-6 rounded-3xl text-xl hover:scale-105 transition shadow-[0_0_25px_#00f0ff]">
-                    FREE KEY (5 hours)
-                </button>
-                <button onclick="getPremiumKey()" 
-                        class="flex-1 min-w-[240px] bg-gradient-to-r from-[#8a2be2] to-[#00bfff] text-black font-bold py-6 rounded-3xl text-xl hover:scale-105 transition shadow-[0_0_25px_#8a2be2]">
-                    PREMIUM KEY (15 hours)
-                </button>
-            </div>
-
-            <div id="key-display" class="mt-8 hidden bg-[#0a0a0a] border-2 border-[#00f0ff] rounded-2xl p-6 text-center">
-                <p class="text-[#00f0ff] text-sm mb-2">✅ KEY GENERATED SUCCESSFULLY</p>
-                <div id="key-text" class="text-3xl font-bold tracking-widest text-white mb-4 break-all"></div>
-                <button onclick="copyCurrentKey()" 
-                        class="bg-[#00f0ff] text-black px-8 py-3 rounded-2xl font-medium flex items-center gap-2 mx-auto">
-                    <i class="fa-solid fa-copy"></i>
-                    COPY KEY
-                </button>
-            </div>
-        </div>
-
-        <!-- ACCOUNT & SCRIPTS -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-[#111] border border-[#222] rounded-3xl p-8">
-                <h3 class="text-xl font-semibold mb-6">📊  Your Account</h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between"><span class="text-[#aaa]">Username</span><span class="font-medium">wave92522-commits</span></div>
-                    <div class="flex justify-between"><span class="text-[#aaa]">Status</span><span class="text-[#00f0ff] font-bold">ACTIVE • Premium</span></div>
-                    <div class="flex justify-between"><span class="text-[#aaa]">Key expires</span><span id="expire-time" class="font-medium">March 29, 2026, 23:59</span></div>
-                </div>
-            </div>
-
-            <div class="bg-[#111] border border-[#222] rounded-3xl p-8">
-                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                    <i class="fa-solid fa-code text-[#00bfff]"></i>
-                    Popular Scripts
-                </h3>
-                <button onclick="copyScript('Infinite Yield')" 
-                        class="w-full bg-[#1a1a1a] hover:bg-[#222] border border-[#333] p-5 rounded-2xl text-left flex justify-between items-center transition">
-                    <div>
-                        <div class="font-medium">Infinite Yield</div>
-                        <div class="text-[#aaa] text-sm">Most popular executor script</div>
-                    </div>
-                    <i class="fa-solid fa-copy text-[#00f0ff]"></i>
-                </button>
-            </div>
-        </div>
-    </div>
+<body>
+    <h1>🚀  JS TEST PAGE</h1>
+    <p>Если ты видишь это и кнопка работает — JavaScript загружается.</p>
+    
+    <button onclick="testButton()">НАЖМИ МЕНЯ — ДОЛЖЕН ПОЯВИТЬСЯ ALERT</button>
 
     <script>
-        // === DEBUG: проверка что JS вообще запустился ===
-        window.onload = function() {
-            console.log("✅ JS loaded successfully!");
-            if (window.location.hostname.includes("wave92522-commits")) {
-                document.getElementById("admin-menu").classList.remove("hidden");
-            }
-22:38
-// alert("JS loaded successfully! Buttons should work now."); // раскомментируй эту строку если хочешь увидеть всплывающее окно при загрузке
-        };
+        // Этот alert должен появиться сразу при открытии страницы
+        alert("✅ JS ЗАГРУЗИЛСЯ УСПЕШНО!\n\nТеперь кнопки будут работать.");
 
-        let currentKey = "";
+        console.log("%c JS TEST LOADED SUCCESSFULLY", "color:#00f0ff; font-size:20px;");
 
-        function showKey(key) {
-            currentKey = key;
-            const display = document.getElementById("key-display");
-            const textEl = document.getElementById("key-text");
-            textEl.textContent = key;
-            display.classList.remove("hidden");
-            navigator.clipboard.writeText(key);
-        }
-
-        function getFreeKey() {
-            const key = "FREE-" + Math.random().toString(36).substring(2, 14).toUpperCase();
-            showKey(key);
-        }
-
-        function getPremiumKey() {
-            const key = "PREM-" + Math.random().toString(36).substring(2, 14).toUpperCase();
-            showKey(key);
-        }
-
-        function copyCurrentKey() {
-            if (currentKey) navigator.clipboard.writeText(currentKey);
-        }
-
-        function copyScript(name) {
-            const text = `-- ${name} successfully loaded`;
-            navigator.clipboard.writeText(text);
-            alert("✅ " + name + " copied to clipboard!");
-        }
-
-        function lockSite() {
-            if (confirm("Close the site for ALL users?")) {
-                alert("✅ Site is now closed for everyone (visible only to you).");
-            }
-        }
-
-        function logout() {
-            if (confirm("Logout?")) location.reload();
+        function testButton() {
+            alert("🎉  Кнопка работает! JS полностью функционален.");
+            console.log("Button clicked - JS is working");
         }
     </script>
 </body>

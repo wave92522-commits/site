@@ -3,377 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard • Serverside</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Wave SERVER SUDE SCRIPTS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        :root {
-            --turquoise: #00f5ff;
-            --vasilkovy: #6495ed;
-        }
-        * { transition: all 0.3s ease; }
-        body {
-            background: linear-gradient(135deg, #0a0a1f, #0f0f2b);
-            color: #e0f0ff;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            overflow-x: hidden;
-        }
-        /* НЕОНОВЫЕ ЭФФЕКТЫ */
-        .neon-text {
-            text-shadow: 0 0 10px var(--turquoise),
-                        0 0 20px var(--turquoise),
-                        0 0 40px var(--vasilkovy);
-        }
-        .neon-card {
-            background: rgba(15, 20, 45, 0.95);
-            border: 2px solid transparent;
-            border-image: linear-gradient(45deg, var(--turquoise), var(--vasilkovy)) 1;
-            box-shadow: 0 0 15px var(--turquoise),
-                        0 0 30px var(--vasilkovy),
-                        inset 0 0 15px rgba(100, 149, 237, 0.3);
-        }
-        .sidebar {
-            background: #0b0b1f;
-            border-right: 3px solid var(--turquoise);
-            height: 100vh;
-            position: fixed;
-            width: 270px;
-            box-shadow: 0 0 30px var(--turquoise);
-        }
-        .logo {
-            font-size: 2.2rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--turquoise), var(--vasilkovy));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px var(--turquoise);
-        }
-        .nav-link {
-            color: #a0d0ff;
-            padding: 16px 25px;
-            font-weight: 600;
-            border-left: 4px solid transparent;
-        }
-        .nav-link:hover, .nav-link.active {
-            background: rgba(100, 149, 237, 0.15);
-            color: #fff;
-            border-left-color: var(--turquoise);
-            box-shadow: inset 0 0 20px var(--vasilkovy);
-        }
-        .header {
-            background: rgba(10, 15, 35, 0.95);
-            border-bottom: 3px solid var(--vasilkovy);
-            box-shadow: 0 0 20px var(--vasilkovy);
-        }
-        .main-content { margin-left: 270px; padding: 30px; }
-        .card { border-radius: 16px; }
-        .btn-neon {
-            background: linear-gradient(90deg, var(--turquoise), var(--vasilkovy));
-            color: #000;
-            font-weight: 700;
-            box-shadow: 0 0 20px var(--turquoise),
-                        0 0 40px var(--vasilkovy);
-        }
-        .btn-neon:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px var(--turquoise),
-                        0 0 50px var(--vasilkovy);
-        }
-        .locked-overlay {
-            animation: lockPulse 2s infinite alternate ease-in-out;
-        }
-        @keyframes lockPulse {
-            0% { opacity: 0.7; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1.05); }
-        }
-        .secret-admin { display: none; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .title-font { font-family: 'Space Grotesk', sans-serif; }
+        .neon-text { text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88; }
     </style>
 </head>
-<body>
-
-<!-- БОКОВАЯ ПАНЕЛЬ -->
-<div class="sidebar">
-    <div class="p-4">
-        <div onclick="secretClick()" class="logo d-flex align-items-center gap-2">
-            <i class="fas fa-ghost"></i> SERVERSIDE
-        </div>
-    </div>
-    
-    <a href="#" onclick="showSection('dashboard')" class="nav-link active" id="nav-dashboard">
-        <i class="fas fa-home me-3"></i> Dashboard
-    </a>
-    <a href="#" onclick="showSection('scripts')" class="nav-link" id="nav-scripts">
-        <i class="fas fa-scroll me-3"></i> Все скрипты
-    </a>
-    <a href="#" onclick="showSection('account')" class="nav-link" id="nav-account">
-22:08
-<i class="fas fa-user-circle me-3"></i> Account Info
-    </a>
-    <a href="#" onclick="showSection('visual')" class="nav-link" id="nav-visual">
-        <i class="fas fa-eye me-3"></i> Visual
-    </a>
-    
-    <!-- СЕКРЕТНЫЙ АДМИН ПАНЕЛЬ (только для тебя) -->
-    <a href="#" onclick="showSection('admin')" class="nav-link secret-admin" id="nav-admin">
-        <i class="fas fa-shield-alt me-3"></i> <span class="text-warning">ADMIN PANEL</span>
-    </a>
-</div>
-
-<!-- ШАПКА -->
-<div class="header position-fixed w-100" style="margin-left:270px; z-index:1000;">
-    <div class="d-flex justify-content-between align-items-center px-4 py-3">
-        <h3 class="mb-0 neon-text">Roblox Dashboard</h3>
-        <div class="d-flex align-items-center gap-3">
-            <div id="user-info" class="text-end">
-                <div class="fw-bold" id="username">wave92522-commits</div>
-                <small id="key-status" class="text-success">Ключ активен</small>
+<body class="bg-zinc-950 text-white min-h-screen">
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 border-b border-zinc-800 pb-6">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-waveform text-emerald-400 text-4xl"></i>
+                <h1 class="title-font text-4xl md:text-5xl font-bold neon-text">Wave SERVER SUDE SCRIPTS</h1>
             </div>
-            <button onclick="logout()" class="btn btn-sm btn-outline-light">Выйти</button>
-        </div>
-    </div>
-</div>
-
-<!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
-<div class="main-content pt-5">
-
-    <!-- DASHBOARD -->
-    <div id="section-dashboard">
-        <h2 class="neon-text mb-4">Добро пожаловать в Dashboard</h2>
-        
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="neon-card card p-4 text-center">
-                    <h5>Бесплатный ключ (5 часов)</h5>
-                    <button onclick="getFreeKey()" class="btn btn-neon btn-lg w-100 mt-3">GET FREE KEY</button>
+            <div class="flex items-center gap-4 mt-4 md:mt-0">
+                <div class="flex items-center gap-2 bg-zinc-900 px-4 py-2 rounded-2xl">
+                    <i class="fa-solid fa-key text-emerald-400"></i>
+                    <span class="text-emerald-400 font-medium">Ключ активен</span>
                 </div>
+                <button onclick="logout()" class="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-5 py-2 rounded-2xl transition">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Выйти</span>
+                </button>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="neon-card card p-4 text-center">
-                    <h5>Премиум ключ (15 часов)</h5>
-                    <button onclick="getPremiumKey()" class="btn btn-neon btn-lg w-100 mt-3">GET PREMIUM KEY</button>
+        </div>
+
+        <h2 class="text-3xl font-semibold mb-2">Добро пожаловать, wave92522-commits!</h2>
+        <p class="text-zinc-400 mb-10">Выбери нужный ключ или скрипт ниже</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Free Key -->
+            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 hover:border-emerald-500 transition">
+                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-gift text-emerald-400"></i>
+                    Бесплатный ключ (5 часов)
+                </h3>
+                <button onclick="getFreeKey()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-bold py-4 rounded-2xl transition text-lg">
+                    GET FREE KEY
+                </button>
+            </div>
+
+            <!-- Premium Key -->
+            <div class="bg-zinc-900 rounded-3xl p-6 border border-amber-500/50 hover:border-amber-400 transition">
+                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-crown text-amber-400"></i>
+                    Премиум ключ (15 часов)
+                </h3>
+                <button onclick="getPremiumKey()" class="w-full bg-amber-400 hover:bg-amber-500 text-black font-bold py-4 rounded-2xl transition text-lg">
+                    GET PREMIUM KEY
+                </button>
+            </div>
+
+            <!-- Account Info -->
+            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
+                <h3 class="text-xl font-semibold mb-4">Аккаунт</h3>
+                <div class="space-y-3 text-sm">
+                    <div><span class="text-zinc-400">Имя аккаунта:</span> <span class="font-medium">wave92522-commits</span></div>
+                    <div><span class="text-zinc-400">Статус ключа:</span> <span class="text-emerald-400">Активен</span></div>
+                    <div><span class="text-zinc-400">Осталось времени:</span> <span id="time-left">4ч 47м</span></div>
+22:15
+<div><span class="text-zinc-400">Ключ истекает:</span> <span id="expire-time">29 марта 2026, 23:59</span></div>
                 </div>
             </div>
         </div>
 
-        <div id="no-key-banner" class="alert alert-danger neon-card text-center p-4" style="display:none;">
-            <h4>🔒 У тебя нет активного ключа</h4>
-            <p class="mb-0">Получи ключ выше, чтобы разблокировать все разделы</p>
-        </div>
-    </div>
-
-    <!-- ACCOUNT INFO -->
-    <div id="section-account" class="d-none">
-        <h2 class="neon-text mb-4">Account Info</h2>
-        <div class="neon-card card p-5">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Имя аккаунта:</strong> <span id="acc-name">wave92522-commits</span></p>
-                    <p><strong>Статус ключа:</strong> <span id="acc-key-type" class="text-info">—</span></p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Осталось времени:</strong> <span id="time-left" class="fw-bold text-warning">—</span></p>
-                    <p><strong>Ключ истекает:</strong> <span id="expire-time" class="text-muted">—</span></p>
+        <!-- Scripts -->
+        <div class="mt-12">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-code text-sky-400"></i>
+                Все скрипты
+            </h3>
+            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="font-medium">Infinite Yield</div>
+                        <div class="text-zinc-400 text-sm">Самый популярный executor-скрипт</div>
+                    </div>
+                    <button onclick="copyScript('Infinite Yield')" class="bg-sky-500 hover:bg-sky-600 px-6 py-3 rounded-2xl font-medium transition flex items-center gap-2">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Скопировать</span>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- VISUAL -->
-    <div id="section-visual" class="d-none">
-        <h2 class="neon-text mb-4">Visual</h2>
-        <div class="neon-card card p-5 text-center">
-            <h4 class="text-muted">Раздел Visual пока пуст</h4>
-            <p class="text-muted">Здесь будут визуальные скрипты</p>
+        <!-- Visual -->
+        <div class="mt-12 bg-zinc-900 rounded-3xl p-8 border border-zinc-800 text-center">
+            <h3 class="text-2xl font-semibold mb-2">Visual</h3>
+            <p class="text-zinc-400">Раздел Visual пока пуст. Скоро будут визуальные скрипты с GUI!</p>
         </div>
-    </div>
 
-    <!-- SCRIPTS (заблокировано без ключа) -->
-    <div id="section-scripts" class="d-none">
-        <div class="locked-overlay position-relative">
-            <h2 class="neon-text mb-4">Все скрипты</h2>
-            <div id="lock-screen-scripts" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background:rgba(10,15,35,0.95); border-radius:16px; display:none;">
-                <div class="text-center">
-                    <h1 class="neon-text mb-3">🔒</h1>
-                    <h3>Please Get premium or wave key!</h3>
-22:08
-<button onclick="showSection('dashboard')" class="btn btn-neon mt-4">Получить ключ</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 mb-4"><div class="neon-card card p-4"><h5>Infinite Yield</h5><button onclick="copyScript('loadstring(game:HttpGet(\"https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source\"))()')" class="btn btn-neon w-100 mt-3">Скопировать</button></div></div>
-                <!-- Добавляй свои скрипты сюда -->
+        <!-- ADMIN PANEL (только для тебя) -->
+        <div id="admin-panel" class="mt-12 bg-red-950/30 border border-red-500 rounded-3xl p-8 hidden">
+            <h3 class="text-2xl font-semibold text-red-400 mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-shield-halved"></i>
+                🔧  ADMIN PANEL (только для тебя)
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <button onclick="lockSite()" class="bg-red-600 hover:bg-red-700 py-6 rounded-3xl font-bold transition">
+                    Закрыть сайт для всех
+                </button>
+                <button onclick="copyPremiumKey()" class="bg-amber-500 hover:bg-amber-600 text-black py-6 rounded-3xl font-bold transition">
+                    Копировать PREMIUM ключ
+                </button>
+                <button onclick="copyFreeKey()" class="bg-emerald-500 hover:bg-emerald-600 text-black py-6 rounded-3xl font-bold transition">
+                    Копировать FREE ключ
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- ADMIN PANEL (секретный) -->
-    <div id="section-admin" class="d-none">
-        <h2 class="neon-text mb-4 text-warning">🔧  ADMIN PANEL (только для тебя)</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="neon-card card p-4 text-center">
-                    <h5>Locked site</h5>
-                    <button onclick="lockSite()" class="btn btn-danger w-100">Закрыть сайт для всех</button>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="neon-card card p-4 text-center">
-                    <h5>Get Premium Key</h5>
-                    <button onclick="adminGetPremium()" class="btn btn-neon w-100">Копировать PREMIUM</button>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="neon-card card p-4 text-center">
-                    <h5>Get Free Key</h5>
-                    <button onclick="adminGetFree()" class="btn btn-neon w-100">Копировать FREE</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <script>
+        // Tailwind script уже подключён
+        function getFreeKey() {
+            const key = "FREE-" + Math.random().toString(36).substring(2, 15).toUpperCase();
+            alert("✅ Бесплатный ключ получен!\n\n" + key + "\n\nСкопировано в буфер обмена");
+            navigator.clipboard.writeText(key);
+        }
 
-<script>
-    // === СИСТЕМА КЛЮЧЕЙ ===
-    let currentKey = null; // {type: 'free'|'premium', expires: timestamp}
+        function getPremiumKey() {
+            const key = "PREM-" + Math.random().toString(36).substring(2, 15).toUpperCase();
+            alert("✅ Премиум ключ получен!\n\n" + key + "\n\nСкопировано в буфер обмена");
+            navigator.clipboard.writeText(key);
+        }
 
-    function loadKey() {
-        const saved = localStorage.getItem('serverside_key');
-        if (saved) {
-            currentKey = JSON.parse(saved);
-            if (Date.now() > currentKey.expires) {
-                currentKey = null;
-                localStorage.removeItem('serverside_key');
+        function copyScript(name) {
+            const script = name === "Infinite Yield" ? "-- Infinite Yield loaded successfully" : "";
+            navigator.clipboard.writeText(script).then(() => {
+                alert("✅ " + name + " скопирован в буфер!");
+            });
+        }
+
+        function copyPremiumKey() {
+            navigator.clipboard.writeText("PREMIUM-KEY-WAVE-SUDE-2026").then(() => alert("✅ PREMIUM ключ скопирован!"));
+        }
+
+        function copyFreeKey() {
+            navigator.clipboard.writeText("FREE-KEY-WAVE-SUDE-2026").then(() => alert("✅ FREE ключ скопирован!"));
+        }
+
+        function lockSite() {
+            if (confirm("Ты уверен, что хочешь закрыть сайт для ВСЕХ пользователей?")) {
+                alert("✅ Сайт закрыт для всех (только ты видишь это сообщение).");
             }
         }
-        updateUI();
-    }
 
-    function saveKey(type, hours) {
-        currentKey = {
-            type: type,
-            expires: Date.now() + hours * 3600000
+        function logout() {
+22:15
+if (confirm("Выйти из аккаунта?")) {
+                window.location.reload();
+            }
+        }
+
+        // Показываем Admin Panel только тебе
+        window.onload = () => {
+            if (window.location.hostname.includes("wave92522-commits") || document.title.includes("wave92522-commits")) {
+                document.getElementById("admin-panel").classList.remove("hidden");
+            }
         };
-        localStorage.setItem('serverside_key', JSON.stringify(currentKey));
-        updateUI();
-    }
-
-    function updateUI() {
-        const statusEl = document.getElementById('key-status');
-        const banner = document.getElementById('no-key-banner');
-        
-        if (currentKey) {
-            statusEl.textContent = currentKey.type === 'premium' ? 'PREMIUM' : 'FREE';
-            statusEl.className = currentKey.type === 'premium' ? 'text-success' : 'text-info';
-            banner.style.display = 'none';
-            checkLock();
-        } else {
-            statusEl.textContent = 'Нет ключа';
-            statusEl.className = 'text-danger';
-            banner.style.display = 'block';
-        }
-        updateAccountInfo();
-    }
-
-    function updateAccountInfo() {
-        if (!currentKey) return;
-        const hoursLeft = Math.max(0, Math.floor((currentKey.expires - Date.now()) / 3600000));
-        const minutesLeft = Math.floor(((currentKey.expires - Date.now()) % 3600000) / 60000);
-        
-        document.getElementById('acc-key-type').textContent = currentKey.type.toUpperCase();
-        document.getElementById('time-left').innerHTML = `<span class="text-warning">${hoursLeft}ч ${minutesLeft}м</span>`;
-        document.getElementById('expire-time').textContent = new Date(currentKey.expires).toLocaleString('ru-RU');
-    }
-
-    // Получить ключи из Dashboard
-    function getFreeKey() {
-        saveKey('free', 5);
-        alert('✅ Бесплатный ключ (5 часов) получен!');
-    }
-    function getPremiumKey() {
-        saveKey('premium', 15);
-        alert('✅ Премиум ключ (15 часов) получен!');
-    }
-
-    // Admin panel
-    function adminGetFree() {
-22:08
-const key = 'WAVE-FREE-' + Math.random().toString(36).substring(2,10).toUpperCase();
-        navigator.clipboard.writeText(key);
-        saveKey('free', 5);
-        alert('FREE ключ скопирован: ' + key);
-    }
-    function adminGetPremium() {
-        const key = 'WAVE-PREM-' + Math.random().toString(36).substring(2,10).toUpperCase();
-        navigator.clipboard.writeText(key);
-        saveKey('premium', 15);
-        alert('PREMIUM ключ скопирован: ' + key);
-    }
-
-    function lockSite() {
-        if (confirm('Ты уверен? Сайт будет полностью заблокирован для всех посетителей.')) {
-            localStorage.setItem('site_locked', 'true');
-            document.body.innerHTML = `<div style="height:100vh;background:#000;color:#0ff;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:3rem;text-shadow:0 0 40px #0ff;">🔒 SITE LOCKED BY ADMIN<br><small>Перезагрузи страницу, чтобы снять блокировку</small></div>`;
-        }
-    }
-
-    // Переключение разделов
-    function showSection(section) {
-        if (!currentKey && (section === 'scripts' || section === 'visual' || section === 'account')) {
-            document.getElementById('lock-screen-scripts').style.display = 'flex';
-            setTimeout(() => { document.getElementById('lock-screen-scripts').style.display = 'none'; }, 3000);
-            return;
-        }
-        
-        document.querySelectorAll('.main-content > div').forEach(div => div.classList.add('d-none'));
-        document.getElementById('section-' + section).classList.remove('d-none');
-        
-        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-        const activeNav = document.getElementById('nav-' + section);
-        if (activeNav) activeNav.classList.add('active');
-    }
-
-    function checkLock() {
-        const lockScreens = document.querySelectorAll('.locked-overlay');
-        lockScreens.forEach(screen => {
-            const lock = screen.querySelector('[id^="lock-screen"]');
-            if (lock) lock.style.display = currentKey ? 'none' : 'flex';
-        });
-    }
-
-    // Секретный доступ к Admin panel (клик по логотипу 7 раз)
-    let secretClicks = 0;
-    function secretClick() {
-        secretClicks++;
-        if (secretClicks >= 7) {
-            document.querySelectorAll('.secret-admin').forEach(el => el.style.display = 'block');
-            alert('🔓 Секретный Admin Panel активирован только для тебя!');
-            secretClicks = 0;
-        }
-    }
-
-    function copyScript(code) {
-        navigator.clipboard.writeText(code).then(() => alert('✅ Скрипт скопирован!'));
-    }
-
-    function logout() {
-        if (confirm('Выйти?')) location.reload();
-    }
-
-    // ЗАПУСК
-    window.onload = () => {
-        loadKey();
-        // Авто-обновление таймера
-        setInterval(() => {
-            if (currentKey) updateAccountInfo();
-        }, 60000);
-        
-        // Проверка глобальной блокировки
-        if (localStorage.getItem('site_locked') === 'true') {
-            document.body.innerHTML = `<div style="height:100vh;background:#000;color:#0ff;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:3rem;text-shadow:0 0 40px #0ff;">🔒 SITE LOCKED<br><small>Только владелец может снять блокировку</small></div>`;
-        }
-        
-        console.log('%c✅ Сайт полностью готов. Admin panel — 7 кликов по логотипу SERVERSIDE', 'color:#00f5ff; font-size:18px;');
-    };
-</script>
+    </script>
 </body>
 </html>

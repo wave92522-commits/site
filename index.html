@@ -16,7 +16,7 @@
     </style>
 </head>
 <body class="bg-[#0a0a0a] text-white flex min-h-screen">
-    <!-- SIDEBAR (exactly like serverside.fun) -->
+    <!-- SIDEBAR exactly like serverside.fun -->
     <div class="w-64 bg-[#111] border-r border-[#222] flex flex-col">
         <div class="p-6 border-b border-[#222]">
             <div class="flex items-center gap-3">
@@ -43,7 +43,6 @@
                 <span>Visuals</span>
             </a>
             
-            <!-- ADMIN PANEL ONLY FOR YOU -->
             <div id="admin-menu" class="hidden mt-8">
                 <div class="text-[#8a2be2] text-xs font-bold px-4 mb-2">ADMIN ONLY</div>
                 <a href="#" onclick="lockSite()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a]">
@@ -76,7 +75,7 @@
                     <i class="fa-solid fa-clock text-[#00f0ff]"></i>
                     <span id="time-left" class="font-medium">4h 47m left</span>
                 </div>
-22:34
+22:38
 <button onclick="logout()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-6 py-2 rounded-3xl transition flex items-center gap-2">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
@@ -102,7 +101,6 @@
                 </button>
             </div>
 
-            <!-- KEY DISPLAY (now working) -->
             <div id="key-display" class="mt-8 hidden bg-[#0a0a0a] border-2 border-[#00f0ff] rounded-2xl p-6 text-center">
                 <p class="text-[#00f0ff] text-sm mb-2">✅ KEY GENERATED SUCCESSFULLY</p>
                 <div id="key-text" class="text-3xl font-bold tracking-widest text-white mb-4 break-all"></div>
@@ -143,26 +141,35 @@
     </div>
 
     <script>
+        // === DEBUG: проверка что JS вообще запустился ===
+        window.onload = function() {
+            console.log("✅ JS loaded successfully!");
+            if (window.location.hostname.includes("wave92522-commits")) {
+                document.getElementById("admin-menu").classList.remove("hidden");
+            }
+22:38
+// alert("JS loaded successfully! Buttons should work now."); // раскомментируй эту строку если хочешь увидеть всплывающее окно при загрузке
+        };
+
         let currentKey = "";
 
-        function showKey(key, type) {
+        function showKey(key) {
             currentKey = key;
             const display = document.getElementById("key-display");
             const textEl = document.getElementById("key-text");
             textEl.textContent = key;
             display.classList.remove("hidden");
-22:34
-navigator.clipboard.writeText(key);
+            navigator.clipboard.writeText(key);
         }
 
         function getFreeKey() {
             const key = "FREE-" + Math.random().toString(36).substring(2, 14).toUpperCase();
-            showKey(key, "FREE");
+            showKey(key);
         }
 
         function getPremiumKey() {
             const key = "PREM-" + Math.random().toString(36).substring(2, 14).toUpperCase();
-            showKey(key, "PREMIUM");
+            showKey(key);
         }
 
         function copyCurrentKey() {
@@ -184,13 +191,6 @@ navigator.clipboard.writeText(key);
         function logout() {
             if (confirm("Logout?")) location.reload();
         }
-
-        // Show Admin Panel ONLY for you
-        window.onload = () => {
-            if (window.location.hostname.includes("wave92522-commits")) {
-                document.getElementById("admin-menu").classList.remove("hidden");
-            }
-        };
     </script>
 </body>
 </html>

@@ -4,123 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wave SERVER SIDE SCRIPTS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
-        
-        body {
-            background: #0a0a0a;
-            color: #eee;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.5;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        h1 {
-            font-size: 2.8rem;
-            text-align: center;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #00f0ff, #00bfff, #8a2be2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: neonShift 3s linear infinite;
-            text-shadow: 0 0 20px #00f0ff, 0 0 40px #00bfff, 0 0 60px #8a2be2;
-        }
-        @keyframes neonShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .key-box {
-            background: #111;
-            border: 3px solid transparent;
-            border-image: linear-gradient(90deg, #00f0ff, #00bfff, #8a2be2) 1;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 25px 0;
-            text-align: center;
-            box-shadow: 0 0 25px #00f0ff;
-            min-height: 100px;
-        }
-        .key-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            word-break: break-all;
-            margin: 15px 0;
-            color: #00f0ff;
-            text-shadow: 0 0 15px #00bfff;
-        }
-        button {
-            background: linear-gradient(90deg, #00bfff, #00f0ff, #8a2be2);
-            color: #000;
-            border: none;
-            padding: 16px 28px;
-            font-size: 1.15rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 8px;
-            margin: 8px;
-            box-shadow: 0 0 20px #00f0ff;
-            transition: all 0.3s;
-        }
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px #8a2be2;
-            filter: brightness(1.2);
-        }
-        .section {
-            background: #111;
-            padding: 22px;
-            margin: 25px 0;
-            border-radius: 12px;
-            border: 2px solid #222;
-        }
-        .admin {
-            background: #1a0033;
-            border: 3px solid #8a2be2;
-            padding: 25px;
-            margin-top: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 25px #8a2be2;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .neon-cyan { text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00bfff; }
+        .sidebar-active { background: linear-gradient(90deg, #00bfff, #00f0ff); color: #000; }
+        @keyframes neonPulse { 0% { text-shadow: 0 0 10px #00f0ff; } 50% { text-shadow: 0 0 30px #8a2be2; } 100% { text-shadow: 0 0 10px #00f0ff; } }
+        .neon-text { animation: neonPulse 2s infinite; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Wave SERVER SIDE SCRIPTS</h1>
-        <p style="text-align:center; color:#aaa; margin-bottom:30px;">Добро пожаловать, wave92522-commits!</p>
+<body class="bg-[#0a0a0a] text-white flex min-h-screen">
+    <!-- SIDEBAR -->
+    <div class="w-64 bg-[#111] border-r border-[#222] flex flex-col">
+        <div class="p-6 border-b border-[#222]">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-waveform text-[#00f0ff] text-3xl neon-cyan"></i>
+                <h1 class="text-2xl font-bold tracking-tighter neon-text">Wave SERVER SIDE</h1>
+            </div>
+        </div>
+        
+        <nav class="flex-1 p-3">
+            <a href="#" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-xl mb-1 text-black font-medium">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a] mb-1">
+                <i class="fa-solid fa-key"></i>
+                <span>My Keys</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a] mb-1">
+                <i class="fa-solid fa-code"></i>
+                <span>Scripts</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a] mb-1">
+                <i class="fa-solid fa-eye"></i>
+                <span>Visuals</span>
+            </a>
+            
+            <!-- ADMIN PANEL только для тебя -->
+            <div id="admin-menu" class="hidden mt-8">
+                <div class="text-[#8a2be2] text-xs font-bold px-4 mb-2">ADMIN</div>
+                <a href="#" onclick="lockSite()" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#1a1a1a]">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Admin Panel</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="p-4 border-t border-[#222]">
+            <div class="flex items-center gap-3 bg-[#1a1a1a] rounded-2xl p-3">
+                <div class="w-9 h-9 bg-[#00f0ff] rounded-full flex items-center justify-center text-black font-bold">W</div>
+                <div>
+                    <div class="font-medium">wave92522-commits</div>
+                    <div class="text-xs text-[#00f0ff]">Premium User</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <div class="key-box" id="key-display">
-            <p style="color:#666;">Нажми кнопку, чтобы получить ключ</p>
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 p-8">
+        <!-- Top Header -->
+        <div class="flex justify-between items-center mb-10">
+            <div>
+                <h2 class="text-4xl font-semibold neon-text">Dashboard</h2>
+                <p class="text-[#aaa]">Добро пожаловать обратно, wave92522-commits</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="bg-[#1a1a1a] px-5 py-2 rounded-3xl flex items-center gap-2">
+                    <i class="fa-solid fa-clock text-[#00f0ff]"></i>
+                    <span id="time-left" class="font-medium">4ч 47м осталось</span>
+                </div>
+22:30
+<button onclick="logout()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-6 py-2 rounded-3xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Выйти
+                </button>
+            </div>
         </div>
 
-        <div style="text-align:center; margin:25px 0;">
-            <button onclick="getFreeKey()">БЕСПЛАТНЫЙ КЛЮЧ (5 часов)</button>
-            <button onclick="getPremiumKey()">ПРЕМИУМ КЛЮЧ (15 часов)</button>
+        <!-- KEY SECTION -->
+        <div class="bg-[#111] border border-[#222] rounded-3xl p-8 mb-8">
+            <h3 class="text-xl font-semibold mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-key text-[#00f0ff]"></i>
+                Получить ключ
+            </h3>
+            
+            <div class="flex flex-wrap gap-4">
+                <button onclick="getFreeKey()" 
+                        class="flex-1 min-w-[240px] bg-gradient-to-r from-[#00bfff] to-[#00f0ff] text-black font-bold py-6 rounded-3xl text-xl hover:scale-105 transition shadow-[0_0_25px_#00f0ff]">
+                    БЕСПЛАТНЫЙ КЛЮЧ (5 часов)
+                </button>
+                <button onclick="getPremiumKey()" 
+                        class="flex-1 min-w-[240px] bg-gradient-to-r from-[#8a2be2] to-[#00bfff] text-black font-bold py-6 rounded-3xl text-xl hover:scale-105 transition shadow-[0_0_25px_#8a2be2]">
+                    ПРЕМИУМ КЛЮЧ (15 часов)
+                </button>
+            </div>
+
+            <!-- Ключ отображается здесь -->
+            <div id="key-display" class="mt-8 hidden bg-[#0a0a0a] border-2 border-[#00f0ff] rounded-2xl p-6 text-center">
+                <p class="text-[#00f0ff] text-sm mb-2">✅ КЛЮЧ УСПЕШНО СГЕНЕРИРОВАН</p>
+                <div id="key-text" class="text-3xl font-bold tracking-widest text-white mb-4 break-all"></div>
+                <button onclick="copyCurrentKey()" 
+                        class="bg-[#00f0ff] text-black px-8 py-3 rounded-2xl font-medium flex items-center gap-2 mx-auto">
+                    <i class="fa-solid fa-copy"></i>
+                    СКОПИРОВАТЬ КЛЮЧ
+                </button>
+            </div>
         </div>
 
-        <div class="section">
-            <h2 style="color:#00f0ff; margin-bottom:15px;">📊  Твой аккаунт</h2>
-            <p>Имя: <strong>wave92522-commits</strong></p>
-            <p>Статус ключа: <span style="color:#00f0ff; font-weight:bold;">АКТИВЕН</span></p>
-            <p>Осталось времени: <span id="time-left">4ч 32м</span></p>
-        </div>
+        <!-- ACCOUNT & SCRIPTS -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Account Card -->
+            <div class="bg-[#111] border border-[#222] rounded-3xl p-8">
+                <h3 class="text-xl font-semibold mb-6">📊  Твой аккаунт</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between"><span class="text-[#aaa]">Имя</span><span class="font-medium">wave92522-commits</span></div>
+                    <div class="flex justify-between"><span class="text-[#aaa]">Статус</span><span class="text-[#00f0ff] font-bold">АКТИВЕН • Premium</span></div>
+                    <div class="flex justify-between"><span class="text-[#aaa]">Ключ истекает</span><span id="expire-time" class="font-medium">29 марта 2026, 23:59</span></div>
+                </div>
+            </div>
 
-        <div class="section">
-            <h2 style="color:#00f0ff; margin-bottom:15px;">📜  Скрипты</h2>
-            <button onclick="copyScript('Infinite Yield')">Скопировать Infinite Yield</button>
-        </div>
-
-        <!-- ADMIN PANEL (только для тебя) -->
-22:26
-<div id="admin-panel" class="admin" style="display:none;">
-            <h2 style="color:#8a2be2;">🔧  ADMIN PANEL</h2>
-            <button onclick="copyPremiumKey()">Копировать PREMIUM ключ</button>
-            <button onclick="copyFreeKey()">Копировать FREE ключ</button>
-            <button onclick="lockSite()" style="background:linear-gradient(#8a2be2,#00bfff); color:white;">Закрыть сайт для всех</button>
+            <!-- Scripts Card -->
+            <div class="bg-[#111] border border-[#222] rounded-3xl p-8">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-code text-[#00bfff]"></i>
+                    Популярные скрипты
+                </h3>
+                <button onclick="copyScript('Infinite Yield')" 
+                        class="w-full bg-[#1a1a1a] hover:bg-[#222] border border-[#333] p-5 rounded-2xl text-left flex justify-between items-center transition">
+                    <div>
+                        <div class="font-medium">Infinite Yield</div>
+                        <div class="text-[#aaa] text-sm">Самый популярный executor</div>
+                    </div>
+                    <i class="fa-solid fa-copy text-[#00f0ff]"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -130,18 +151,12 @@
         function showKey(key, type) {
             currentKey = key;
             const display = document.getElementById("key-display");
-            display.innerHTML = `
-                <p style="color:#00f0ff; margin-bottom:10px; font-size:1.3rem;">✅ ${type} КЛЮЧ ПОЛУЧЕН!</p>
-                <div class="key-text">${key}</div>
-                <button onclick="copyCurrentKey()" style="padding:12px 24px; font-size:1rem;">📋 Скопировать ключ</button>
-            `;
-            copyCurrentKey(); // авто-копирование
-        }
-
-        function copyCurrentKey() {
-            if (currentKey) {
-                navigator.clipboard.writeText(currentKey);
-            }
+            const textEl = document.getElementById("key-text");
+22:30
+textEl.textContent = key;
+            display.classList.remove("hidden");
+            display.style.animation = "neonPulse 1.5s infinite";
+            navigator.clipboard.writeText(key);
         }
 
         function getFreeKey() {
@@ -154,20 +169,14 @@
             showKey(key, "ПРЕМИУМ");
         }
 
+        function copyCurrentKey() {
+            if (currentKey) navigator.clipboard.writeText(currentKey);
+        }
+
         function copyScript(name) {
             const text = `-- ${name} успешно загружен`;
             navigator.clipboard.writeText(text);
-            alert("✅ " + name + " скопирован в буфер!");
-        }
-
-        function copyPremiumKey() {
-            navigator.clipboard.writeText("PREMIUM-KEY-WAVE-SIDE-2026");
-            alert("✅ PREMIUM ключ скопирован!");
-        }
-
-        function copyFreeKey() {
-            navigator.clipboard.writeText("FREE-KEY-WAVE-SIDE-2026");
-            alert("✅ FREE ключ скопирован!");
+            alert("✅ " + name + " скопирован в буфер обмена!");
         }
 
         function lockSite() {
@@ -176,10 +185,14 @@
             }
         }
 
-        // Показываем Admin Panel только тебе
+        function logout() {
+            if (confirm("Выйти из аккаунта?")) location.reload();
+        }
+
+        // Показываем Admin только тебе
         window.onload = () => {
             if (window.location.hostname.includes("wave92522-commits")) {
-                document.getElementById("admin-panel").style.display = "block";
+                document.getElementById("admin-menu").classList.remove("hidden");
             }
         };
     </script>

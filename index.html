@@ -4,166 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wave SERVER SUDE SCRIPTS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .title-font { font-family: 'Space Grotesk', sans-serif; }
-        .neon-text { text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88; }
+        body {
+            background: #111;
+            color: #eee;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #00ff88;
+        }
+        h2 {
+            color: #00cc66;
+            border-bottom: 2px solid #333;
+            padding-bottom: 8px;
+        }
+        .key-section, .script-section {
+            background: #1a1a1a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+        button {
+            background: #00cc66;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #00ff88;
+        }
+        .admin {
+            background: #330000;
+            border: 2px solid #ff3333;
+            padding: 15px;
+            margin-top: 30px;
+            display: none;
+        }
+        pre {
+            background: #222;
+            padding: 15px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .status {
+            color: #00ff88;
+            font-weight: bold;
+        }
     </style>
 </head>
-<body class="bg-zinc-950 text-white min-h-screen">
-    <div class="max-w-7xl mx-auto p-4 md:p-8">
-        <!-- Header -->
-        <div class="flex flex-col md:flex-row justify-between items-center mb-10 border-b border-zinc-800 pb-6">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-waveform text-emerald-400 text-4xl"></i>
-                <h1 class="title-font text-4xl md:text-5xl font-bold neon-text">Wave SERVER SUDE SCRIPTS</h1>
-            </div>
-            <div class="flex items-center gap-4 mt-4 md:mt-0">
-                <div class="flex items-center gap-2 bg-zinc-900 px-4 py-2 rounded-2xl">
-                    <i class="fa-solid fa-key text-emerald-400"></i>
-                    <span class="text-emerald-400 font-medium">Ключ активен</span>
-                </div>
-                <button onclick="logout()" class="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-5 py-2 rounded-2xl transition">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Выйти</span>
-                </button>
-            </div>
+<body>
+    <div class="container">
+        <h1>Wave SERVER SUDE SCRIPTS</h1>
+        <p style="text-align:center; color:#aaa;">Добро пожаловать, wave92522-commits!</p>
+
+        <div class="key-section">
+            <h2>🔑  Получить ключ</h2>
+            <button onclick="getFreeKey()">БЕСПЛАТНЫЙ КЛЮЧ (5 часов)</button>
+            <button onclick="getPremiumKey()">ПРЕМИУМ КЛЮЧ (15 часов)</button>
+            <p id="key-result" style="margin-top:15px; font-size:1.1rem;"></p>
         </div>
 
-        <h2 class="text-3xl font-semibold mb-2">Добро пожаловать, wave92522-commits!</h2>
-        <p class="text-zinc-400 mb-10">Выбери нужный ключ или скрипт ниже</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Free Key -->
-            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 hover:border-emerald-500 transition">
-                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-gift text-emerald-400"></i>
-                    Бесплатный ключ (5 часов)
-                </h3>
-                <button onclick="getFreeKey()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-bold py-4 rounded-2xl transition text-lg">
-                    GET FREE KEY
-                </button>
-            </div>
-
-            <!-- Premium Key -->
-            <div class="bg-zinc-900 rounded-3xl p-6 border border-amber-500/50 hover:border-amber-400 transition">
-                <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-crown text-amber-400"></i>
-                    Премиум ключ (15 часов)
-                </h3>
-                <button onclick="getPremiumKey()" class="w-full bg-amber-400 hover:bg-amber-500 text-black font-bold py-4 rounded-2xl transition text-lg">
-                    GET PREMIUM KEY
-                </button>
-            </div>
-
-            <!-- Account Info -->
-            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
-                <h3 class="text-xl font-semibold mb-4">Аккаунт</h3>
-                <div class="space-y-3 text-sm">
-                    <div><span class="text-zinc-400">Имя аккаунта:</span> <span class="font-medium">wave92522-commits</span></div>
-                    <div><span class="text-zinc-400">Статус ключа:</span> <span class="text-emerald-400">Активен</span></div>
-                    <div><span class="text-zinc-400">Осталось времени:</span> <span id="time-left">4ч 47м</span></div>
-22:15
-<div><span class="text-zinc-400">Ключ истекает:</span> <span id="expire-time">29 марта 2026, 23:59</span></div>
-                </div>
-            </div>
+        <div class="key-section">
+            <h2>📊  Твой аккаунт</h2>
+            <p>Имя: <strong>wave92522-commits</strong></p>
+            <p>Статус ключа: <span class="status">АКТИВЕН</span></p>
+            <p>Осталось: <span id="time-left">4ч 47м</span></p>
         </div>
 
-        <!-- Scripts -->
-        <div class="mt-12">
-            <h3 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-                <i class="fa-solid fa-code text-sky-400"></i>
-                Все скрипты
-            </h3>
-            <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <div class="font-medium">Infinite Yield</div>
-                        <div class="text-zinc-400 text-sm">Самый популярный executor-скрипт</div>
-                    </div>
-                    <button onclick="copyScript('Infinite Yield')" class="bg-sky-500 hover:bg-sky-600 px-6 py-3 rounded-2xl font-medium transition flex items-center gap-2">
-                        <i class="fa-solid fa-copy"></i>
-                        <span>Скопировать</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Visual -->
-        <div class="mt-12 bg-zinc-900 rounded-3xl p-8 border border-zinc-800 text-center">
-            <h3 class="text-2xl font-semibold mb-2">Visual</h3>
-            <p class="text-zinc-400">Раздел Visual пока пуст. Скоро будут визуальные скрипты с GUI!</p>
+        <div class="script-section">
+            <h2>📜  Скрипты</h2>
+            <button onclick="copyScript('Infinite Yield')">Скопировать Infinite Yield</button>
+            <pre id="script-output" style="display:none; margin-top:10px;">-- Infinite Yield загружен успешно</pre>
         </div>
 
         <!-- ADMIN PANEL (только для тебя) -->
-        <div id="admin-panel" class="mt-12 bg-red-950/30 border border-red-500 rounded-3xl p-8 hidden">
-            <h3 class="text-2xl font-semibold text-red-400 mb-6 flex items-center gap-3">
-                <i class="fa-solid fa-shield-halved"></i>
-                🔧  ADMIN PANEL (только для тебя)
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <button onclick="lockSite()" class="bg-red-600 hover:bg-red-700 py-6 rounded-3xl font-bold transition">
-                    Закрыть сайт для всех
-                </button>
-                <button onclick="copyPremiumKey()" class="bg-amber-500 hover:bg-amber-600 text-black py-6 rounded-3xl font-bold transition">
-                    Копировать PREMIUM ключ
-                </button>
-                <button onclick="copyFreeKey()" class="bg-emerald-500 hover:bg-emerald-600 text-black py-6 rounded-3xl font-bold transition">
-                    Копировать FREE ключ
-                </button>
-            </div>
+        <div id="admin-panel" class="admin">
+            <h2>🔧  ADMIN PANEL (только wave92522-commits)</h2>
+            <button onclick="copyPremiumKey()">Копировать PREMIUM ключ</button>
+            <button onclick="copyFreeKey()">Копировать FREE ключ</button>
+            <button onclick="lockSite()" style="background:#ff3333; color:white;">Закрыть сайт для всех</button>
         </div>
     </div>
 
     <script>
-        // Tailwind script уже подключён
         function getFreeKey() {
-            const key = "FREE-" + Math.random().toString(36).substring(2, 15).toUpperCase();
-            alert("✅ Бесплатный ключ получен!\n\n" + key + "\n\nСкопировано в буфер обмена");
+            const key = "FREE-" + Math.random().toString(36).substring(2, 12).toUpperCase();
+            document.getElementById("key-result").innerHTML = `✅ Получен бесплатный ключ:<br><strong>${key}</strong><br>(скопировано в буфер)`;
             navigator.clipboard.writeText(key);
         }
 
         function getPremiumKey() {
-            const key = "PREM-" + Math.random().toString(36).substring(2, 15).toUpperCase();
-            alert("✅ Премиум ключ получен!\n\n" + key + "\n\nСкопировано в буфер обмена");
+            const key = "PREM-" + Math.random().toString(36).substring(2, 12).toUpperCase();
+            document.getElementById("key-result").innerHTML = `✅ Получен премиум ключ:<br><strong>${key}</strong><br>(скопировано в буфер)`;
             navigator.clipboard.writeText(key);
         }
 
         function copyScript(name) {
-            const script = name === "Infinite Yield" ? "-- Infinite Yield loaded successfully" : "";
-            navigator.clipboard.writeText(script).then(() => {
-                alert("✅ " + name + " скопирован в буфер!");
-            });
+22:18
+const output = document.getElementById("script-output");
+            output.style.display = "block";
+            output.textContent = "-- " + name + " загружен успешно";
+            navigator.clipboard.writeText(output.textContent);
+            alert("✅ " + name + " скопирован!");
         }
 
         function copyPremiumKey() {
-            navigator.clipboard.writeText("PREMIUM-KEY-WAVE-SUDE-2026").then(() => alert("✅ PREMIUM ключ скопирован!"));
+            navigator.clipboard.writeText("PREMIUM-KEY-WAVE-SUDE-2026");
+            alert("✅ PREMIUM ключ скопирован!");
         }
 
         function copyFreeKey() {
-            navigator.clipboard.writeText("FREE-KEY-WAVE-SUDE-2026").then(() => alert("✅ FREE ключ скопирован!"));
+            navigator.clipboard.writeText("FREE-KEY-WAVE-SUDE-2026");
+            alert("✅ FREE ключ скопирован!");
         }
 
         function lockSite() {
-            if (confirm("Ты уверен, что хочешь закрыть сайт для ВСЕХ пользователей?")) {
-                alert("✅ Сайт закрыт для всех (только ты видишь это сообщение).");
-            }
-        }
-
-        function logout() {
-22:15
-if (confirm("Выйти из аккаунта?")) {
-                window.location.reload();
+            if (confirm("Закрыть сайт для всех пользователей?")) {
+                alert("✅ Сайт закрыт (видно только тебе).");
             }
         }
 
         // Показываем Admin Panel только тебе
-        window.onload = () => {
-            if (window.location.hostname.includes("wave92522-commits") || document.title.includes("wave92522-commits")) {
-                document.getElementById("admin-panel").classList.remove("hidden");
+        window.onload = function() {
+            if (window.location.hostname.includes("wave92522-commits")) {
+                document.getElementById("admin-panel").style.display = "block";
             }
         };
     </script>

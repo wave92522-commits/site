@@ -65,28 +65,21 @@
         }
         @keyframes shimmer { 100% { transform: translateX(300%); } }
 
-        .sidebar-link { position: relative; }
+        .sidebar-link { position: relative; cursor: pointer; }
         .sidebar-link:hover::after {
             content: ''; position: absolute; left: 0; bottom: -2px;
             width: 100%; height: 3px;
             background: linear-gradient(to right, var(--neon-cyan), var(--neon-turquoise));
             box-shadow: 0 0 15px var(--neon-cyan);
         }
-
-        .key-card { animation: keyRotate 8s linear infinite; }
-        @keyframes keyRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .content-section { display: none; }
-22:53
-.content-section.active { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body class="min-h-screen text-white flex">
 
     <!-- SIDEBAR -->
     <div class="w-72 bg-[#0a0a2a]/95 border-r border-[#00f5ff]/30 flex flex-col h-screen fixed">
-        <div class="p-6 border-b border-[#00f5ff]/20 flex items-center gap-3">
+22:58
+<div class="p-6 border-b border-[#00f5ff]/20 flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#00f5ff] to-[#00ffc8] flex items-center justify-center text-3xl shadow-[0_0_30px_#00f5ff]">🌊 </div>
             <div>
                 <h1 class="text-3xl font-bold neon-text tracking-tighter">WAVE</h1>
@@ -95,18 +88,18 @@
         </div>
 
         <nav class="flex-1 px-4 py-6 space-y-1">
-            <a onclick="navigateTo('dashboard')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl text-[#00f5ff] hover:bg-[#00f5ff]/10 font-medium cursor-pointer">
+            <div onclick="showSection('dashboard')" id="nav-dashboard" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl text-[#00f5ff] hover:bg-[#00f5ff]/10 font-medium">
                 <i class="fa-solid fa-house w-5"></i> <span>Dashboard</span>
-            </a>
-            <a onclick="navigateTo('keys')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl hover:bg-[#00f5ff]/10 font-medium cursor-pointer">
+            </div>
+            <div onclick="showSection('keys')" id="nav-keys" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl hover:bg-[#00f5ff]/10 font-medium">
                 <i class="fa-solid fa-key w-5"></i> <span>Ключи</span>
-            </a>
-            <a onclick="navigateTo('scripts')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl hover:bg-[#00f5ff]/10 font-medium cursor-pointer">
+            </div>
+            <div onclick="showSection('scripts')" id="nav-scripts" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl hover:bg-[#00f5ff]/10 font-medium">
                 <i class="fa-solid fa-code w-5"></i> <span>Скрипты</span>
-            </a>
-            <a onclick="navigateTo('activity')" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl hover:bg-[#00f5ff]/10 font-medium cursor-pointer">
+            </div>
+            <div onclick="showSection('activity')" id="nav-activity" class="sidebar-link flex items-center gap-3 px-5 py-4 rounded-3xl hover:bg-[#00f5ff]/10 font-medium">
                 <i class="fa-solid fa-chart-bar w-5"></i> <span>Активность</span>
-            </a>
+            </div>
         </nav>
 
         <div class="p-6 border-t border-[#00f5ff]/20 mt-auto">
@@ -142,123 +135,118 @@
                 </div>
                 <div class="text-right">
                     <div id="current-time" class="font-mono text-sm"></div>
-22:53
-<div class="text-xs text-[#00f5ff]/60">29 марта 2026</div>
+                    <div class="text-xs text-[#00f5ff]/60">29 марта 2026</div>
                 </div>
                 <div class="flex items-center gap-2 bg-black/40 rounded-3xl p-1 pr-6">
                     <div class="w-8 h-8 bg-gradient-to-br from-[#00f5ff] to-[#00ffc8] rounded-2xl flex items-center justify-center">🌊 </div>
-                    <div><p class="text-sm font-medium">Wave User</p></div>
+22:58
+<div><p class="text-sm font-medium">Wave User</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- CONTENT SECTIONS (теперь всё работает!) -->
-        <div class="p-8">
-
-            <!-- DASHBOARD -->
-            <div id="dashboard" class="content-section active">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="neon-card rounded-3xl p-6">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-[#00f5ff]/70 text-sm">Оставшееся время</p>
-                                <p id="timer-big" class="text-5xl font-bold neon-text font-mono">10ч 47м</p>
-                            </div>
-                            <i class="fa-solid fa-hourglass-end text-5xl text-[#00ffc8]"></i>
+        <!-- ДАШБОРД -->
+        <div id="dashboard-section" class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="neon-card rounded-3xl p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[#00f5ff]/70 text-sm">Оставшееся время</p>
+                            <p id="timer-big" class="text-5xl font-bold neon-text font-mono">10ч 47м</p>
                         </div>
+                        <i class="fa-solid fa-hourglass-end text-5xl text-[#00ffc8]"></i>
                     </div>
-                    <div class="neon-card rounded-3xl p-6">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-[#00f5ff]/70 text-sm">Тип ключа</p>
-                                <p class="text-5xl font-bold neon-text">PREMIUM</p>
-                                <p class="text-xs text-emerald-400 mt-2">Активен • 10 часов</p>
-                            </div>
-                            <i class="fa-solid fa-gem text-5xl text-[#00b8ff]"></i>
+                </div>
+                <div class="neon-card rounded-3xl p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[#00f5ff]/70 text-sm">Тип ключа</p>
+                            <p class="text-5xl font-bold neon-text">PREMIUM</p>
+                            <p class="text-xs text-emerald-400 mt-2">Активен • 10 часов</p>
                         </div>
+                        <i class="fa-solid fa-gem text-5xl text-[#00b8ff]"></i>
                     </div>
-                    <div class="neon-card rounded-3xl p-6">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-[#00f5ff]/70 text-sm">Популярный скрипт</p>
-                                <p class="text-3xl font-bold">Infinite Yield</p>
-                                <button onclick="copyScript()" class="mt-4 text-xs px-5 py-2 neon-button rounded-3xl flex items-center gap-2">
-                                    <i class="fa-solid fa-copy"></i> КОПИРОВАТЬ
-                                </button>
-                            </div>
+                </div>
+                <div class="neon-card rounded-3xl p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[#00f5ff]/70 text-sm">Популярный скрипт</p>
+                            <p class="text-3xl font-bold">Infinite Yield</p>
+                            <button onclick="copyScript()" class="mt-4 text-xs px-5 py-2 neon-button rounded-3xl flex items-center gap-2">
+                                <i class="fa-solid fa-copy"></i> КОПИРОВАТЬ
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- КЛЮЧИ -->
-            <div id="keys" class="content-section">
-                <h3 class="text-2xl font-semibold mb-6 neon-text flex items-center gap-3"><i class="fa-solid fa-key"></i> СИСТЕМА КЛЮЧЕЙ</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="neon-card rounded-3xl p-8 key-card">
-                        <div class="flex justify-between">
-                            <div>
-                                <span class="px-4 py-1 text-xs font-bold bg-[#00ffc8]/20 text-[#00ffc8] rounded-3xl">WAVE KEY</span>
-                                <h4 class="text-4xl font-bold mt-4">5 часов активации</h4>
-                                <p class="text-[#00f5ff]/70 mt-2">Базовый доступ</p>
-                            </div>
-                            <div class="text-7xl opacity-20">🌊 </div>
+        <!-- КЛЮЧИ -->
+        <div id="keys-section" class="p-8 hidden">
+            <h3 class="text-2xl font-semibold mb-6 neon-text flex items-center gap-3"><i class="fa-solid fa-key"></i> СИСТЕМА КЛЮЧЕЙ</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="neon-card rounded-3xl p-8">
+                    <div class="flex justify-between">
+                        <div>
+                            <span class="px-4 py-1 text-xs font-bold bg-[#00ffc8]/20 text-[#00ffc8] rounded-3xl">WAVE KEY</span>
+                            <h4 class="text-4xl font-bold mt-4">5 часов активации</h4>
+                            <p class="text-[#00f5ff]/70 mt-2">Базовый доступ</p>
                         </div>
-                        <button onclick="generateKey('wave')" class="neon-button w-full mt-8 py-6 text-xl font-bold rounded-3xl flex items-center justify-center gap-3">СГЕНЕРИРОВАТЬ WAVE KEY</button>
+                        <div class="text-7xl opacity-20">🌊 </div>
                     </div>
+                    <button onclick="generateKey('wave')" class="neon-button w-full mt-8 py-6 text-xl font-bold rounded-3xl flex items-center justify-center gap-3">СГЕНЕРИРОВАТЬ WAVE KEY</button>
+                </div>
 
-                    <div class="neon-card rounded-3xl p-8 key-card" style="border-image: linear-gradient(90deg, #00b8ff, #00f5ff, #7cc6ff) 1;">
-                        <div class="flex justify-between">
-                            <div>
-22:53
-<span class="px-4 py-1 text-xs font-bold bg-[#00b8ff]/20 text-[#00b8ff] rounded-3xl">PREMIUM KEY</span>
-                                <h4 class="text-4xl font-bold mt-4">10 часов активации</h4>
-                                <p class="text-[#00f5ff]/70 mt-2">Расширенный доступ + приоритет</p>
-                            </div>
-                            <div class="text-7xl opacity-20">💎 </div>
+                <div class="neon-card rounded-3xl p-8" style="border-image: linear-gradient(90deg, #00b8ff, #00f5ff, #7cc6ff) 1;">
+                    <div class="flex justify-between">
+                        <div>
+                            <span class="px-4 py-1 text-xs font-bold bg-[#00b8ff]/20 text-[#00b8ff] rounded-3xl">PREMIUM KEY</span>
+                            <h4 class="text-4xl font-bold mt-4">10 часов активации</h4>
+                            <p class="text-[#00f5ff]/70 mt-2">Расширенный доступ + приоритет</p>
                         </div>
-                        <button onclick="generateKey('premium')" class="neon-button w-full mt-8 py-6 text-xl font-bold rounded-3xl flex items-center justify-center gap-3">СГЕНЕРИРОВАТЬ PREMIUM KEY</button>
+                        <div class="text-7xl opacity-20">💎 </div>
                     </div>
+                    <button onclick="generateKey('premium')" class="neon-button w-full mt-8 py-6 text-xl font-bold rounded-3xl flex items-center justify-center gap-3">СГЕНЕРИРОВАТЬ PREMIUM KEY</button>
                 </div>
             </div>
-
-            <!-- СКРИПТЫ -->
-            <div id="scripts" class="content-section">
-                <h3 class="text-2xl font-semibold mb-6 neon-text">Популярные скрипты</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="neon-card rounded-3xl p-6 text-center">
-                        <p class="text-2xl mb-2">Infinite Yield</p>
-                        <p class="text-sm text-[#00f5ff]/70">Самый популярный</p>
-                        <button onclick="useScript()" class="mt-6 px-8 py-3 neon-button rounded-3xl text-sm">ЗАПУСТИТЬ В EXECUTOR</button>
-                    </div>
-                    <div class="neon-card rounded-3xl p-6 text-center">
-                        <p class="text-2xl mb-2">Wave Hub</p>
-                        <p class="text-sm text-[#00f5ff]/70">Новый универсальный хаб</p>
-                        <button onclick="useScript()" class="mt-6 px-8 py-3 neon-button rounded-3xl text-sm">ЗАПУСТИТЬ В EXECUTOR</button>
-                    </div>
-                    <div class="neon-card rounded-3xl p-6 text-center">
-                        <p class="text-2xl mb-2">Dex Hub</p>
-                        <p class="text-sm text-[#00f5ff]/70">Для всех игр</p>
-                        <button onclick="useScript()" class="mt-6 px-8 py-3 neon-button rounded-3xl text-sm">ЗАПУСТИТЬ В EXECUTOR</button>
-                    </div>
+        </div>
+22:58
+<!-- СКРИПТЫ -->
+        <div id="scripts-section" class="p-8 hidden">
+            <h3 class="text-2xl font-semibold mb-6 neon-text">Популярные скрипты</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="neon-card rounded-3xl p-6 text-center">
+                    <p class="text-2xl mb-2">Infinite Yield</p>
+                    <p class="text-sm text-[#00f5ff]/70">Самый популярный</p>
+                    <button onclick="useScript()" class="mt-6 px-8 py-3 neon-button rounded-3xl text-sm">ЗАПУСТИТЬ В EXECUTOR</button>
+                </div>
+                <div class="neon-card rounded-3xl p-6 text-center">
+                    <p class="text-2xl mb-2">Wave Hub</p>
+                    <p class="text-sm text-[#00f5ff]/70">Новый универсальный хаб</p>
+                    <button onclick="useScript()" class="mt-6 px-8 py-3 neon-button rounded-3xl text-sm">ЗАПУСТИТЬ В EXECUTOR</button>
+                </div>
+                <div class="neon-card rounded-3xl p-6 text-center">
+                    <p class="text-2xl mb-2">Dex Hub</p>
+                    <p class="text-sm text-[#00f5ff]/70">Для всех игр</p>
+                    <button onclick="useScript()" class="mt-6 px-8 py-3 neon-button rounded-3xl text-sm">ЗАПУСТИТЬ В EXECUTOR</button>
                 </div>
             </div>
+        </div>
 
-            <!-- АКТИВНОСТЬ (просто заглушка) -->
-            <div id="activity" class="content-section">
-                <h3 class="text-2xl font-semibold mb-6 neon-text">Твоя активность</h3>
-                <div class="neon-card rounded-3xl p-8 text-center text-[#00f5ff]/70">
-                    <p class="text-6xl mb-4">📈 </p>
-                    <p class="text-xl">Здесь скоро будет график использования скриптов 🔥 </p>
-                    <p class="mt-8 text-sm">Пока что всё работает — просто наслаждайся неоновой красотой!</p>
-                </div>
+        <!-- АКТИВНОСТЬ -->
+        <div id="activity-section" class="p-8 hidden">
+            <h3 class="text-2xl font-semibold mb-6 neon-text">Твоя активность</h3>
+            <div class="neon-card rounded-3xl p-8 text-center text-[#00f5ff]/70">
+                <p class="text-6xl mb-4">📈 </p>
+                <p class="text-xl">Здесь скоро будет график использования скриптов 🔥 </p>
+                <p class="mt-8 text-sm">Всё работает — наслаждайся неоновой красотой!</p>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛКА КЛЮЧА -->
+    <!-- МОДАЛКА -->
     <div id="key-modal" onclick="if(event.target.id==='key-modal')closeModal()" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-[9999]">
-        <div onclick="event.stopImmediatePropagation()" class="modal bg-[#0a0a2a] border border-[#00f5ff]/50 rounded-3xl max-w-md w-full mx-4 p-8 neon-card">
+        <div onclick="event.stopImmediatePropagation()" class="bg-[#0a0a2a] border border-[#00f5ff]/50 rounded-3xl max-w-md w-full mx-4 p-8 neon-card">
             <h3 class="text-2xl font-bold neon-text text-center mb-6">КЛЮЧ СГЕНЕРИРОВАН УСПЕШНО! 🎉 </h3>
             <div id="generated-key-display" class="font-mono bg-black/70 p-6 rounded-2xl text-center text-2xl tracking-[6px] mb-8 break-all select-all"></div>
             <div class="flex gap-4">
@@ -270,31 +258,28 @@
     </div>
 
     <script>
-        // === ИНИЦИАЛИЗАЦИЯ TAILWIND ===
-        function initTailwind() {
-            return true; // CDN уже подключён
-        }
-22:53
-// === НАВИГАЦИЯ (теперь 100% работает) ===
-        function navigateTo(page) {
-            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
-            const target = document.getElementById(page);
-            if (target) target.classList.add('active');
+        console.log('%c🌊  Wave Dashboard полностью загружен и ВСЁ РАБОТАЕТ!', 'color:#00f5ff; font-size:20px; font-weight:bold;');
 
-            document.getElementById('page-title').textContent = 
-                page === 'dashboard' ? 'Dashboard' :
-                page === 'keys' ? 'Ключи' :
-                page === 'scripts' ? 'Скрипты' :
-                page === 'activity' ? 'Активность' : 'Wave Dashboard';
-        }
+        function showSection(section) {
+            // Скрываем все секции
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('keys-section').classList.add('hidden');
+            document.getElementById('scripts-section').classList.add('hidden');
+            document.getElementById('activity-section').classList.add('hidden');
 
-        // === ГЕНЕРАЦИЯ КЛЮЧА ===
-        function generateRandomKey() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let key = '';
-            for (let i = 0; i < 5; i++) key += chars[Math.floor(Math.random() * chars.length)];
-            key += '-' + Date.now().toString(36).toUpperCase().slice(-6);
-            return key;
+            // Показываем нужную
+            if (section === 'dashboard') document.getElementById('dashboard-section').classList.remove('hidden');
+            if (section === 'keys') document.getElementById('keys-section').classList.remove('hidden');
+            if (section === 'scripts') document.getElementById('scripts-section').classList.remove('hidden');
+            if (section === 'activity') document.getElementById('activity-section').classList.remove('hidden');
+
+            // Меняем заголовок
+22:58
+const title = document.getElementById('page-title');
+            if (section === 'dashboard') title.textContent = 'Dashboard';
+            else if (section === 'keys') title.textContent = 'Ключи';
+            else if (section === 'scripts') title.textContent = 'Скрипты';
+            else if (section === 'activity') title.textContent = 'Активность';
         }
 
         function generateKey(type) {
@@ -302,17 +287,19 @@
             const display = document.getElementById('generated-key-display');
             const durationText = document.getElementById('key-duration-text');
 
-            const key = generateRandomKey();
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let key = '';
+            for (let i = 0; i < 5; i++) key += chars[Math.floor(Math.random() * chars.length)];
+            key += '-' + Date.now().toString(36).toUpperCase().slice(-6);
+
             display.textContent = key;
 
             if (type === 'wave') {
                 durationText.innerHTML = `🌊  Wave Key • <span class="text-[#00ffc8] font-bold">5 часов активации</span>`;
             } else {
                 durationText.innerHTML = `💎  Premium Key • <span class="text-[#00b8ff] font-bold">10 часов активации</span>`;
-                // Демо: сразу ставим премиум
                 document.getElementById('timer-big').textContent = '10ч 00м';
                 document.getElementById('remaining-time').textContent = '10ч 00м';
-                document.getElementById('status-badge').innerHTML = 'PREMIUM';
             }
 
             modal.style.display = 'flex';
@@ -322,65 +309,55 @@
             const key = document.getElementById('generated-key-display').textContent;
             navigator.clipboard.writeText(key).then(() => {
                 const btn = document.querySelector('#key-modal button');
-                const oldText = btn.innerHTML;
+                const old = btn.innerHTML;
                 btn.innerHTML = '✅ СКОПИРОВАНО!';
-                setTimeout(() => {
-                    btn.innerHTML = oldText;
-                    closeModal();
-                }, 1500);
+                setTimeout(() => { btn.innerHTML = old; closeModal(); }, 1400);
             });
         }
 
         function closeModal() {
-            const modal = document.getElementById('key-modal');
-            modal.style.display = 'none';
+            document.getElementById('key-modal').style.display = 'none';
         }
 
-        // === ДРУГИЕ ФУНКЦИИ ===
         function copyScript() {
             navigator.clipboard.writeText('loadstring(game:HttpGet("https://wave92522-commits.github.io/site/scripts/infinite-yield.lua"))()').then(() => {
-                alert('✅ Infinite Yield скопирован в буфер!');
+                alert('✅ Infinite Yield скопирован в буфер обмена!');
             });
         }
 
         function useScript() {
-            alert('🚀  Скрипт успешно запущен в Roblox Executor!\n(Демо-режим)');
+            alert('🚀  Скрипт успешно запущен в Roblox Executor! (демо)');
         }
 
         function logout() {
             if (confirm('Выйти из аккаунта wave92522-commits?')) location.reload();
         }
 
-        // === ТАЙМЕР И ВРЕМЯ ===
         function updateClock() {
             setInterval(() => {
-                const timeEl = document.getElementById('current-time');
+                const el = document.getElementById('current-time');
                 const now = new Date();
-                timeEl.textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                el.textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             }, 1000);
         }
 
-        // === ДЕМО-ТАЙМЕР ===
-        let minutesLeft = 647; // 10ч 47м
-        function startDemoTimer() {
+        let minutesLeft = 647;
+        function startTimer() {
             setInterval(() => {
                 minutesLeft--;
                 if (minutesLeft < 0) minutesLeft = 647;
                 const h = Math.floor(minutesLeft / 60);
                 const m = minutesLeft % 60;
-                const timeStr = `${h}ч ${m}м`;
-22:53
-document.getElementById('timer-big').textContent = timeStr;
-                document.getElementById('remaining-time').textContent = timeStr;
-            }, 60000); // каждую минуту (для демо)
+                const str = `${h}ч ${m}м`;
+                document.getElementById('timer-big').textContent = str;
+                document.getElementById('remaining-time').textContent = str;
+            }, 60000);
         }
 
-        // === ЗАПУСК ВСЕГО ===
         window.onload = function() {
-            initTailwind();
             updateClock();
-            startDemoTimer();
-            console.log('%c🌊  Wave Dashboard полностью загружен и ВСЁ РАБОТАЕТ!', 'color:#00f5ff; font-size:20px; font-weight:bold;');
+            startTimer();
+            console.log('Все кнопки и навигация готовы к работе!');
         };
     </script>
 </body>
